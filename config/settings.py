@@ -22,7 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Production overrides arrive via environment (Render sets RENDER_EXTERNAL_HOSTNAME);
 # the insecure literal stays only so bare `runserver` keeps working for dev.
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-1htkqp0&387)^*z7$i++ju40o!ss+b*i*gvw$501mnp#5)ho5h")
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY", "django-insecure-1htkqp0&387)^*z7$i++ju40o!ss+b*i*gvw$501mnp#5)ho5h"
+)
 
 DEBUG = os.environ.get("DJANGO_DEBUG", "1") == "1"
 

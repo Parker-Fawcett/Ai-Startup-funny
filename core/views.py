@@ -12,6 +12,7 @@ from django.utils import timezone
 from core.compliance import compute_filing_deadline, days_remaining
 from core.compliance_models import FilingReceipt
 from core.forms import CompleteForm, ImportForm
+from core.funnel import track
 from core.importing import ImportResult, parse_customers_csv
 from core.marketing_models import CaseStudy
 from core.media_models import JobAttachment
@@ -119,7 +120,11 @@ def import_customers(request: HttpRequest) -> HttpResponse:
                 organization=get_default_organization(),
                 text=form.cleaned_data["csv_file"],
             )
+            track("import_completed", rows=len(result.rows))
             if not result.errors:
+                count = len(result.rows)
+                noun = "customer" if count == 1 else "customers"
+                messages.success(request, f"Imported {count} {noun}.")
                 return redirect("dashboard")
             return render(
                 request,

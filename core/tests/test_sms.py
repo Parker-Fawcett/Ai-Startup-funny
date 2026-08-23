@@ -168,9 +168,7 @@ class TestRemindersCommandSms:
             mails.append(recipients)
 
         monkeypatch.setattr(sms_channel, "send_sms", capture_sms)
-        monkeypatch.setattr(
-            "core.management.commands.send_reminders.send_mail", fake_send_mail
-        )
+        monkeypatch.setattr("core.management.commands.send_reminders.send_mail", fake_send_mail)
         call_command("send_reminders", channel="both", stdout=StringIO())
 
         assert texts == ["+14135550111"]

@@ -10,7 +10,8 @@ cannot drift from verified figures, and estimates stay flagged.
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
-from django.http import HttpRequest, HttpResponse
+from django.db import transaction
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -18,6 +19,7 @@ from django.utils import timezone
 from core import payments
 from core.billing_models import Invoice, InvoiceStatus, PaymentMethod
 from core.forms import SignupForm
+from core.funnel import track
 from core.marketing_data import (
     CANONICAL_PATHS,
     COMPETITORS,
@@ -162,8 +164,10 @@ def signup(request: HttpRequest) -> HttpResponse:
             user = User.objects.create_user(
                 username=email, email=email, password=form.cleaned_data["password1"]
             )
-            Organization.objects.create(name=form.cleaned_data["shop_name"])
-            auth_login(request, user)
+            with transaction.atomic():
+                organization = Organization.objects.create(name=form.cleaned_data["shop_name"])
+                auth_login(request, user)
+                track("signup_created", organization=organization)
             return redirect("dashboard")
     else:
         form = SignupForm()
@@ -172,8 +176,9 @@ def signup(request: HttpRequest) -> HttpResponse:
 
 def pricing(request: HttpRequest) -> HttpResponse:
     """Public plan page; numbers live in marketing_data so copy cannot drift."""
-    from core.marketing_models import CaseStudy
+    from core.marketing_models import CaseStudy  # noqa: PLC0415 -- avoids app-init cycle
 
+    track("visited_pricing")
     references = CaseStudy.objects.filter(published=True, is_callable=True)[:3]
     return render(
         request,
@@ -187,9 +192,6 @@ def pricing(request: HttpRequest) -> HttpResponse:
     )
 
 
-from django.http import JsonResponse
-
-
-def health(request: HttpRequest) -> HttpResponse:
+def health(request: HttpRequest) -> HttpResponse:  # noqa: ARG001 -- probe contract takes request
     """Liveness probe for platform health checks; auth-free by design."""
     return JsonResponse({"ok": True})

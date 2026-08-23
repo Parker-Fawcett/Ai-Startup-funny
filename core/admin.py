@@ -10,7 +10,7 @@ from core.compliance_models import FilingReceipt, Jurisdiction
 from core.exporting import build_route_sale_zip
 from core.marketing_models import CaseStudy
 from core.media_models import JobAttachment
-from core.models import Customer, Job, Organization, TankEvent
+from core.models import Customer, FunnelEvent, Job, Organization, TankEvent
 from core.services import get_default_organization
 
 
@@ -170,3 +170,12 @@ class InvoiceAdmin(admin.ModelAdmin):
     list_filter = ("status", "payment_method")
     search_fields = ("number", "job__customer__name")
     readonly_fields = ("lines", "public_token")
+
+
+@admin.register(FunnelEvent)
+class FunnelEventAdmin(admin.ModelAdmin):
+    """The four conversion events; the whole growth dashboard at founder scale."""
+
+    list_display = ("name", "organization", "created_at")
+    list_filter = ("name",)
+    date_hierarchy = "created_at"

@@ -9,7 +9,7 @@ from core.models import Organization
 
 @pytest.fixture(autouse=True)
 def _unhashed_static(settings):
-    """Tests must not depend on a collectstatic manifest snapshot."""
+    """Keep tests independent of any collectstatic manifest snapshot."""
     settings.STORAGES["staticfiles"]["BACKEND"] = (
         "django.contrib.staticfiles.storage.StaticFilesStorage"
     )

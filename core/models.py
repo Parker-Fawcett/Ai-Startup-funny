@@ -185,3 +185,20 @@ class TankEvent(models.Model):
 
     def __str__(self) -> str:
         return f"{self.event_date} {self.customer} {self.gallons or '?'}gal"
+
+
+class FunnelEvent(models.Model):
+    """One recorded conversion-funnel event (see ``core.funnel``)."""
+
+    name = models.CharField(max_length=32, db_index=True)
+    organization = models.ForeignKey(
+        Organization, on_delete=models.SET_NULL, null=True, blank=True, related_name="funnel_events"
+    )
+    meta = models.JSONField(default=dict)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ("-created_at", "-pk")
+
+    def __str__(self) -> str:
+        return f"{self.name} @ {self.created_at:%Y-%m-%d %H:%M}"
