@@ -27,6 +27,7 @@ from core.marketing_data import (
     CANONICAL_PATHS,
     COMPETITORS,
     DISCLAIMER,
+    FOUNDING_OFFER,
     PLANS,
     PRICING_AS_OF,
     PUMPRUN,
@@ -225,6 +226,7 @@ def pricing(request: HttpRequest) -> HttpResponse:
         {
             "plans": PLANS,
             "plans_contract": PUMPRUN["contract"],
+            "founding": FOUNDING_OFFER,
             "callable_references": references,
             "callable_count": CaseStudy.objects.filter(published=True, is_callable=True).count(),
         },

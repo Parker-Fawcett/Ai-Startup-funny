@@ -29,6 +29,13 @@
 </script>
 {% endblock %}
 {% block content %}
+{% if founding %}
+<div class="card" style="border-color:#b45309;background:#fffbeb">
+  <div class="kicker" style="color:#b45309">Founding customer offer</div>
+  <h3 style="margin-bottom:.3rem">{{ founding.headline }}</h3>
+  <p style="margin:.2rem 0">{{ founding.body }} <strong>{{ founding.remaining }} spots left.</strong></p>
+</div>
+{% endif %}
 <section class="hero">
   <h1>One flat bill. Whole crew included.</h1>
   <p>Per-tech pricing punishes you for hiring driver #4. We don't.</p>
