@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ invoice.number }} — {{ invoice.organization.name }}</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; max-width: 30rem; margin: 0 auto; padding: 1rem; background: #f5f5f0; color: #1a1a1a; line-height: 1.4; }
+    .card { background: #fff; border-radius: 8px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+    h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
+    table { width: 100%; border-collapse: collapse; margin: .75rem 0; }
+    td { padding: .45rem 0; border-bottom: 1px solid #eee; }
+    td.amt { text-align: right; font-variant-numeric: tabular-nums; }
+    .total { font-size: 1.6rem; font-weight: 700; margin: .5rem 0; }
+    .badge { display: inline-block; padding: .25rem .7rem; border-radius: 999px; font-size: .9rem; }
+    .due { background: #fdecea; color: #b00020; }
+    .paid { background: #e6f4ea; color: #14663b; }
+    .hint { color: #666; font-size: .85rem; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>{{ invoice.organization.name }}</h1>
+    <p class="hint">{{ invoice.number }} · Issued {{ invoice.issued_on }}</p>
+    <table>
+      {% for line in invoice.lines %}
+        <tr><td>{{ line.label }}</td><td class="amt">${{ line.amount }}</td></tr>
+      {% endfor %}
+    </table>
+    <p class="total">Total due: ${{ invoice.total }}</p>
+    {% if invoice.status == "paid" %}
+      <span class="badge paid">Paid {{ invoice.paid_on }} · {{ invoice.get_payment_method_display }}</span>
+    {% elif invoice.status == "void" %}
+      <span class="badge hint">Void</span>
+    {% else %}
+      <span class="badge due">Due</span>
+      {% if pay_url %}<a class="btn" style="display:block;text-align:center;margin:.75rem 0;padding:.9rem;background:#14663b;color:#fff;border-radius:6px;text-decoration:none;font-size:1.15rem" href="{{ pay_url }}">Pay ${{ invoice.total }} by card</a>{% endif %}
+      <p>To pay by card or ask a question, call <strong>{{ invoice.organization.name }}</strong>.
+      Prefer check? Make it payable to {{ invoice.organization.name }} and note
+      <strong>{{ invoice.number }}</strong> on the memo line.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

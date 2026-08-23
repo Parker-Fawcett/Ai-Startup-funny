@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Simple flat pricing</h2>
+  <p class="hint">{{ plans_contract }}</p>
+  {% for plan in plans %}
+  <div class="card" style="margin:.75rem 0">
+    <h3>{{ plan.name }} — {{ plan.price }}</h3>
+    <p><strong>{{ plan.trucks }}</strong></p>
+    <p class="hint">{{ plan.features }}</p>
+    <a class="btn" href="{% url 'signup' %}">Start free trial</a>
+  </div>
+  {% endfor %}
+  <p class="hint">Every plan includes unlimited users — add a driver without a bigger bill.</p>
+</div>
+{% endblock %}

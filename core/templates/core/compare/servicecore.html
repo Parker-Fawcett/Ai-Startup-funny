@@ -1,0 +1,58 @@
+{% extends "core/base.html" %}
+{% block title %}ServiceCore alternative for small septic companies: PumpRun compared (2026){% endblock %}
+{% block meta_description %}ServiceCore doesn't publish pricing, requires an annual contract, and takes 6-12 weeks to onboard. If you run 1-10 septic trucks, compare it against PumpRun's flat $499, month-to-month, live tomorrow — sources cited.{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>{{ pumprun.name }} as a ServiceCore alternative</h1>
+  <p>ServiceCore is the vertical's mindshare leader — PE-backed, staffed with ex-operators,
+  and genuinely strong for multi-truck fleets running portable sanitation, septic, and
+  dumpster rentals together. If that's your business, look at them seriously. This page is
+  for the 1–10-truck septic shop deciding whether the same tool fits.</p>
+
+  <h2>Pricing: quote-only vs published flat</h2>
+  <table>
+    <tr><th></th><th>ServiceCore</th><th>PumpRun</th></tr>
+    <tr><td>Price</td><td>Quote-only — no dollar figures on their pricing page</td><td>$499/mo flat, up to 10 trucks, unlimited users</td></tr>
+    <tr><td>Contract</td><td>Annual contract required, billed monthly (their own FAQ)</td><td>Month-to-month, cancel anytime</td></tr>
+    <tr><td>Onboarding</td><td>6-12 weeks typical (their own FAQ); no free trial</td><td>Self-serve CSV import — minutes, day one</td></tr>
+    <tr><td>Compliance</td><td>No advertised septage filing workflow; their comparison content tells buyers to "ask ServiceCore about their septage compliance capabilities during your demo"</td><td>Statutory due-date engine, board-formatted pump-out PDFs, filing receipts (e.g., MA's 14-day Title 5 clock)</td></tr>
+    <tr><td>Reviews</td><td>Capterra 4.0/5 across 51 reviews</td><td>Small installed base — ask us for callable references instead</td></tr>
+  </table>
+  <p>{{ competitor.price_note }}</p>
+
+  <h2>Where ServiceCore genuinely wins</h2>
+  <ul>
+    <li>Fleet scale: routing, inventory, and billing shaped for operators with many trucks
+    across several waste verticals.</li>
+    <li>Industry insidedness: support staff hired from the industry, an ambassador network,
+    and an annual operator benchmark report.</li>
+    <li>A funded organization ($54M raised) behind support and roadmap.</li>
+  </ul>
+
+  <h2>Where PumpRun wins</h2>
+  <ul>
+    <li><strong>Speed:</strong> import your spreadsheet today, run a sequenced route tomorrow.
+    A quarter of setup is a non-starter for scheduling software at this size.</li>
+    <li><strong>No annual lock:</strong> month-to-month against a required annual contract;
+    export your whole book anytime, including a route-sale diligence package.</li>
+    <li><strong>Predictable price:</strong> $499 published, flat, unlimited users — versus a
+    demo-gated quote that third-party trackers place well above it per truck.</li>
+    <li><strong>Filing deadlines as data:</strong> town-level rules, statutory clocks, and
+    board-ready PDFs — the workflow ServiceCore's own materials don't claim to cover.</li>
+  </ul>
+
+  <h2>Sources</h2>
+  <ul class="hint">
+    <li>servicecore.com/pricing — fetched August 2026: Start/Pro plans with identical feature
+    lists, zero dollar figures, demo call required; FAQ quotes above are theirs.</li>
+    <li>septibase.com/compare and cleansavannah.com roundup, August 2026 — third-party
+    reported per-truck estimates.</li>
+    <li>capterra.com ServiceCore listing — 4.0/5 across 51 reviews, August 2026.</li>
+  </ul>
+
+  <p class="hint">{{ disclaimer }}</p>
+  <p>Also compare: <a href="/compare/tank-track/">Tank Track</a> ·
+  <a href="/compare/pumpdocket/">PumpDocket</a></p>
+  <a class="btn" href="{% url 'import' %}">Import your book now — don't wait 6-12 weeks</a>
+</div>
+{% endblock %}

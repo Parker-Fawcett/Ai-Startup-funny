@@ -1,0 +1,71 @@
+{% extends "core/base.html" %}
+{% block title %}Tank Track vs PumpRun: pricing, field closeout &amp; compliance compared (2026){% endblock %}
+{% block meta_description %}Tank Track costs $180/mo for the first truck plus $150 per additional truck. See the fleet-size math against PumpRun's flat $499, where each product genuinely wins, and every price's source — verified August 2026.{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Tank Track vs PumpRun</h1>
+  <p>Tank Track is the real incumbent: around since 2013, 300+ operators claimed, and
+  genuinely recommended inside Pumper Nation. That reputation is earned and we won't pretend
+  otherwise. This page is our honest read of where each product wins, with prices read from
+  vendor pages in {{ as_of }}.</p>
+
+  <h2>Pricing: per-truck vs flat</h2>
+  <table>
+    <tr><th>Trucks</th><th>Tank Track</th><th>PumpRun</th></tr>
+    <tr><td>1</td><td>$180/mo</td><td rowspan="5">$499/mo flat<br>(unlimited users)</td></tr>
+    <tr><td>2</td><td>$330/mo</td></tr>
+    <tr><td>3</td><td>$480/mo</td></tr>
+    <tr><td>4</td><td>$630/mo</td></tr>
+    <tr><td>5</td><td>$780/mo</td></tr>
+  </table>
+  <p>{{ competitor.price_line }} — unlimited users, tanks, and storage sites; no contract;
+  no free trial (a 60-day money-back guarantee instead). {{ competitor.price_note }}</p>
+  <p>The crossover is truck #4: $630 vs $499. Hiring driver #4 shouldn't raise your software
+  bill by $131/mo — at five trucks it's $281/mo. And their price just moved ~20%; ours is
+  $499 with a rate lock for as long as you stay.</p>
+
+  <h2>Where Tank Track genuinely wins</h2>
+  <ul>
+    <li>At 1–3 trucks ($180–$480) it beats $499 on price alone.</li>
+    <li>Thirteen years of peer goodwill in Pumper Nation — recommendations we can't buy.</li>
+    <li>Free white-glove data migration and 1–4 live training sessions.</li>
+    <li>Auto-generated waste manifests where coverage exists.</li>
+  </ul>
+
+  <h2>Where PumpRun wins</h2>
+  <ul>
+    <li><strong>Flat from truck 4:</strong> $630 → $499 at four trucks, $780 → $499 at five,
+    unlimited users included either way.</li>
+    <li><strong>Rate lock:</strong> lock $499 while per-truck quotes just rose ~20%.</li>
+    <li><strong>Statutory due dates:</strong> every tank carries its legal next-due date and
+    an auto-filled, board-formatted pump-out PDF for the 14-day Massachusetts filing clock.
+    Tank Track's manifest coverage is a TX/OH patchwork — a promised Florida integration was
+    publicly missed by its own customers' account.</li>
+    <li><strong>Self-serve CSV import:</strong> your route book loads in minutes, day one.</li>
+    <li><strong>Same-day invoicing:</strong> every completed stop mints an invoice with a
+    shareable pay link and one-tap check/cash settlement; Tank Track bills per truck but
+    doesn't close the money loop.</li>
+    <li><strong>Email reminders:</strong> due-soon and overdue customers get automatic
+    nudges on schedule — the 3-year cycle is won at reminder time.</li>
+    <li><strong>Offline closeout:</strong> no signal at the tank? The completed stop
+    saves on the phone — photo included — and sends itself when bars return. Tank
+    Track is browser-only with no offline story.</li>
+  </ul>
+
+  <h2>Sources</h2>
+  <ul class="hint">
+    <li>tank-track.com/#pricing — fetched August 2026 ($180 + $150/truck, unlimited users,
+    60-day MBG).</li>
+    <li>guideflow.com septic-software roundup, July 21, 2026 snapshot — same page then showed
+    $149/$125 (dates the increase).</li>
+    <li>dynoroute.com best-septic-pumping-software, August 19, 2026 — independent confirmation
+    of $180/$150 and zero Capterra reviews.</li>
+    <li>reddit.com r/septictanks thread — operator report of the missed FL manifest promise.</li>
+  </ul>
+
+  <p class="hint">{{ disclaimer }}</p>
+  <p>Also compare: <a href="/compare/servicecore/">ServiceCore</a> ·
+  <a href="/compare/pumpdocket/">PumpDocket</a></p>
+  <a class="btn" href="{% url 'import' %}">Import your route book — be routing today</a>
+</div>
+{% endblock %}

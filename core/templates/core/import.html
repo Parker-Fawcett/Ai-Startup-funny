@@ -1,0 +1,21 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Import customers</h2>
+  <p class="hint">CSV with a header row. Required: <code>name</code>, <code>address</code>.
+  Optional: <code>city,state,zip,tank_size_gallons,pump_interval_months,last_pumped</code> (dates as YYYY-MM-DD).</p>
+  {% if errors %}
+    <div class="errors">
+      <strong>Imported {{ imported_count }} row(s); rejected:</strong>
+      <ul>
+        {% for e in errors %}<li>Row {{ e.row_number }}: {{ e.reason }}</li>{% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>{{ form.csv_file }}</p>
+    <button class="btn" type="submit">Import</button>
+  </form>
+</div>
+{% endblock %}

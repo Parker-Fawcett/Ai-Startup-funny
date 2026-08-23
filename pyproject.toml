@@ -1,0 +1,87 @@
+[project]
+name = "pumprun"
+version = "0.1.0"
+description = "Route sequencing, auto-filled pump-out reports, and statutory due-date tracking for septic haulers."
+readme = "README.md"
+authors = [
+    { name = "Parker Fawcett", email = "Parkerscottfawcett@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "django>=6.1",
+    "reportlab>=5.0.1",
+]
+
+[dependency-groups]
+dev = [
+    "basedpyright>=1.39.10",
+    "pytest>=9.1.1",
+    "pytest-django>=4.14.0",
+    "ruff>=0.16.4",
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = ["test_*.py"]
+testpaths = ["core/tests"]
+addopts = "-ra --strict-markers --strict-config"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+format.quote-style = "double"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "COM812", # trailing comma conflicts with formatter
+    "ISC001", # conflicts with formatter
+    "CPY001", # no copyright-header convention in this repo
+    "D105",   # Django dunder stubs (__str__) are self-documenting
+    "D106",   # nested Meta/Choices classes are self-documenting
+    "D104",   # package docstrings add nothing alongside module docstrings
+    "TRY003", # Django ValidationError carries the user-facing message as its payload
+    "EM101",  # same boundary idiom: message strings ARE the validation output
+    "EM102",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"core/migrations/*" = ["ALL"]
+"core/tests/*" = [
+    "S101", "PLR2004", "SLF001", "ARG001", "ARG002",
+    "D100", "D101", "D102", "D103",
+    "ANN",   # test signatures are fixtures/pytest idioms
+    "DTZ011",# naive date.today() is deliberate for relative fixtures
+    "E501",  # long inline fixture rows read better unbroken
+]
+"config/*" = ["ANN", "D100", "D101", "D103", "E501"] # Django-generated bootstrap
+"manage.py" = ["ANN", "E501", "PLC0415"]
+"core/importing.py" = ["DTZ007"]  # parses date-only strings; timezone is meaningless for a calendar date
+"config/settings.py" = ["S105"]   # dev fallback key; production reads DJANGO_SECRET_KEY
+"core/management/commands/seed_demo.py" = ["ARG002"] # BaseCommand.handle signature is fixed
+
+[tool.basedpyright]
+typeCheckingMode = "all"
+includePaths = ["."]
+exclude = ["**/migrations", "**/.venv"]
+# Django resolves several patterns at runtime that static analysis cannot see without
+# django-stubs (unavailable for Django 6.1). Each relaxation below is scoped to one such idiom;
+# do not widen further without justification:
+reportMissingImports = true
+reportUnknownMemberType = "none"      # Model.objects / related managers are attached dynamically
+reportUnknownArgumentType = "none"    # ORM querysets flow through untyped internals
+reportUnknownVariableType = "none"
+reportUnknownParameterType = "none"
+reportAttributeAccessIssue = "none"   # same dynamic-manager attachment as above
+reportUnnecessaryComparison = "none"  # request.method literals narrow only with django-stubs
+reportUnusedParameter = "none"        # view/processor signatures are fixed by framework contracts
+reportMissingTypeStubs = "none"       # django-stubs cannot resolve against Django 6.1 yet
+reportUnannotatedClassAttribute = "none" # model fields/admin options are declarative class attributes
+reportImplicitOverride = "none"       # __str__/save/ModelAdmin options override framework base classes
+reportUnusedCallResult = "none"       # ORM writers (.save/.bulk_create) return self by contract
+reportAny = "none"                    # pk and related accessors are Any until stubs exist
+reportImplicitStringConcatenation = "none" # adjacent literals used for long config strings
+reportIncompatibleVariableOverride = "none" # ModelAdmin options are declarative overrides
+
+[tool.uv]
+package = false

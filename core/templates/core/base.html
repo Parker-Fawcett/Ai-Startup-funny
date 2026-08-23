@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14663b">
+  <link rel="manifest" href="/static/pumprun/manifest.webmanifest">
+  <title>{% block title %}PumpRun — septic route &amp; Board-of-Health filing software{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}Route sequencing, same-day invoicing with customer pay links, due-soon email reminders, and statutory filing deadlines for 1–10-truck septic haulers.{% endblock %}">
+  <style>
+    :root { font-family: -apple-system, system-ui, sans-serif; line-height: 1.4; }
+    body { margin: 0 auto; max-width: 44rem; padding: 1rem; background: #f5f5f0; color: #1a1a1a; }
+    nav a { margin-right: .75rem; }
+    .card { background: #fff; border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { text-align: left; padding: .3rem .4rem; border-bottom: 1px solid #eee; }
+    .btn { display: inline-block; padding: .55rem 1rem; border-radius: 6px; background: #14663b; color: #fff; text-decoration: none; border: none; font-size: 1rem; }
+    .btn.secondary { background: #666; }
+    label.pick { display: block; padding: .45rem 0; border-bottom: 1px solid #eee; }
+    input[type=checkbox] { width: 1.25rem; height: 1.25rem; vertical-align: middle; }
+    input[type=text], input[type=number], textarea { width: 100%; font-size: 1.05rem; padding: .5rem; box-sizing: border-box; }
+    button.btn { width: 100%; padding: .9rem; margin-top: .5rem; font-size: 1.15rem; }
+    .overdue { color: #b00020; }
+    .errors { background: #fdecea; border: 1px solid #e57373; border-radius: 6px; padding: .6rem 1rem; }
+    ol.route { padding-left: 1.25rem; }
+    ol.route li { margin: .5rem 0; }
+    .hint { color: #666; font-size: .85rem; }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="{% url 'dashboard' %}">Today</a>
+  <a href="{% url 'route_day' today|date:'Y-m-d' %}">Route</a>
+  <a href="{% url 'import' %}">Import</a>
+  <a href="{% url 'compare_index' %}">Compare</a>
+  <a href="/pricing/">Pricing</a>
+  <a href="/admin/">Admin</a>
+  {% if not user.is_authenticated %}<a href="{% url 'signup' %}">Start free trial</a>{% endif %}
+  {% if user.is_authenticated %}<form method="post" action="{% url 'logout' %}" style="display:inline">{% csrf_token %}<button style="background:none;border:none;color:#14663b;cursor:pointer;padding:0">Log out</button></form>{% endif %}
+</nav>
+{% if messages %}{% for m in messages %}<p class="hint">{{ m }}</p>{% endfor %}{% endif %}
+{% block content %}{% endblock %}
+<script src="/static/pumprun/offline.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+{% extends "core/base.html" %}
+{% block title %}PumpDocket vs PumpRun: $99 starter vs flat $499 — what the difference buys (2026){% endblock %}
+{% block meta_description %}PumpDocket's Starter is $99/mo intro ($139 standard) capped at 75 active customers. Compare tiers, caps, and compliance depth against PumpRun's flat $499 — with PumpDocket's own disclaimer quoted and sources cited.{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>PumpDocket vs {{ pumprun.name }}</h1>
+  <p>PumpDocket launched in 2026 saying most of the right things: transparent pricing, no
+  contracts, unlimited users, CSV import, tap-complete in the field. We think that validates
+  the category rather than threatening it — so here's the honest side-by-side, including
+  where their $99 is simply the better buy.</p>
+
+  <h2>Pricing and limits</h2>
+  <table>
+    <tr><th></th><th>PumpDocket</th><th>PumpRun</th></tr>
+    <tr><td>1–3 trucks</td><td>Starter $99/mo intro ($139 standard) — capped at 75 active customers</td><td rowspan="3">$499/mo flat, up to 10 trucks,<br>no customer cap on any tier</td></tr>
+    <tr><td>4–10 trucks</td><td>Team $230/mo intro ($329 standard)</td></tr>
+    <tr><td>11+ trucks</td><td>Fleet $454/mo intro ($649 standard)</td></tr>
+    <tr><td>Users</td><td>Unlimited</td><td>Unlimited</td></tr>
+    <tr><td>Contract</td><td>Month-to-month; first month free; intro rates advertised as locked for life</td><td>Month-to-month; rate lock while you stay</td></tr>
+  </table>
+  <p>{{ competitor.price_note }}</p>
+
+  <h2>Where PumpDocket genuinely wins</h2>
+  <ul>
+    <li>Price at nearly every size: Team runs $230–$329 against our $499.</li>
+    <li>A lifetime rate-lock promo and a free first month.</li>
+    <li>Cited regulatory profiles across all 50 states — the source links are real.</li>
+    <li>Zero third-party reviews either way means neither of us can rest on reputation;
+    judge both of us on callable references.</li>
+  </ul>
+
+  <h2>Where PumpRun wins</h2>
+  <ul>
+    <li><strong>No cap:</strong> Starter stops at 75 active customers — smaller than many
+    real route books. Our flat price has no ceiling on tanks or accounts.</li>
+    <li><strong>Maintained filing logic, not just citations:</strong> their own disclaimer
+    reads "We don't guarantee compliance — that's your responsibility." We maintain
+    jurisdiction rules as data (effective dates, change logs), enforce statutory clocks like
+    Massachusetts' 14-day Board-of-Health window, and track filing receipts per job.</li>
+    <li><strong>Board-formatted output:</strong> auto-filled pump-out reports shaped for the
+    Approving Authority, not generic trip tickets.</li>
+    <li><strong>The ledger:</strong> tank history keyed to parcel/address becomes an asset
+    you can export as a route-sale diligence package.</li>
+  </ul>
+
+  <p>If price is your only criterion and your book fits under 75 customers, PumpDocket is a
+  rational pick. If your Board-of-Health paperwork is the risk you're insuring against,
+  compare how each product maintains its rules before you decide.</p>
+
+  <h2>Sources</h2>
+  <ul class="hint">
+    <li>pumpdocket.com/pricing — fetched August 2026: tier prices, 75-customer Starter cap,
+    month-to-month terms, and the compliance disclaimer quoted above.</li>
+    <li>getapp PumpDocket listing — zero reviews, August 2026.</li>
+  </ul>
+
+  <p class="hint">{{ disclaimer }}</p>
+  <p>Also compare: <a href="/compare/tank-track/">Tank Track</a> ·
+  <a href="/compare/servicecore/">ServiceCore</a></p>
+  <a class="btn" href="{% url 'import' %}">Import your route book today</a>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "core/base.html" %}
+{% block title %}Septic pumping software compared: Tank Track vs ServiceCore vs PumpDocket vs PumpRun{% endblock %}
+{% block meta_description %}Honest head-to-head comparisons for septic haulers: Tank Track's per-truck pricing, ServiceCore's quote-only annual contract, and PumpDocket's $99 starter tier — verified against vendor pricing pages in August 2026.{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Septic software, compared honestly</h1>
+  <p>Buying software in this trade means wading through marketing pages and a thin review
+  base. These pages put the real numbers side by side — every price cites where it was read,
+  estimates are flagged as third-party, and we say plainly where the other guy wins.</p>
+
+  <table>
+    <tr><th>Compare</th><th>Their entry price</th><th>Contract</th></tr>
+    {% for c in competitors %}
+      <tr>
+        <td><a href="/compare/{{ c.slug }}/">{{ pumprun.name }} vs {{ c.name }}</a></td>
+        <td>{{ c.price_line }}</td>
+        <td>{{ c.contract }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <h2>Where {{ pumprun.name }} stands</h2>
+  <p>{{ pumprun.price_line }}. {{ pumprun.contract }}. Built for 1–10-truck septic shops:
+  CSV import → nearest-neighbor route → tap-complete → auto-invoice + pay link → board-formatted pump-out PDF
+  → statutory due dates with filing receipts.</p>
+
+  <p class="hint">{{ disclaimer }}</p>
+</div>
+{% endblock %}

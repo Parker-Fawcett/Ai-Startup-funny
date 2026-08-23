@@ -1,0 +1,13 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Log in</h2>
+  {% if form.errors %}<div class="errors">Check your username and password.</div>{% endif %}
+  <form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">Log in</button>
+    <input type="hidden" name="next" value="{{ next }}">
+  </form>
+  <p class="hint">New here? <a href="{% url 'signup' %}">Start free trial</a> · <a href="{% url 'pricing' %}">Pricing</a></p>
+</div>
+{% endblock %}

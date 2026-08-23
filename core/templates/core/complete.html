@@ -1,0 +1,21 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Complete stop</h2>
+  <p><strong>{{ job.customer.name }}</strong><br>{{ job.customer.address }}</p>
+  {% if job.customer.tank_size_gallons %}<p>Tank: {{ job.customer.tank_size_gallons }} gallons</p>{% endif %}
+  <form method="post" enctype="multipart/form-data" data-offline-queue>
+    {% csrf_token %}
+    <p><label>Gallons pumped<br>{{ form.gallons }}</label></p>
+    <p><label>Disposal site<br>{{ form.disposal_site }}</label></p>
+    <p><label>System type<br>{{ form.system_type }}</label>
+       <span class="hint">septic / tight tank / cesspool / grease trap</span></p>
+    <p><label>Filter service<br>{{ form.filter_action }}</label></p>
+    <p><label>Notes<br>{{ form.notes }}</label></p>
+    <p><label>Photo (proof of service)<br>{{ form.photo }}</label></p>
+    {% if form.photo.errors %}<div class="errors">{{ form.photo.errors }}</div>{% endif %}
+    <button class="btn" type="submit">Mark completed</button>
+    <a class="btn secondary" href="{% url 'route_day' job.route_day|date:'Y-m-d' %}">Back</a>
+  </form>
+</div>
+{% endblock %}

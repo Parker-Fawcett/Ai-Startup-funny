@@ -1,0 +1,81 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Today — {{ today }}</h2>
+  {% if todays_jobs %}
+    <ol class="route">
+      {% for job in todays_jobs %}
+        <li>
+          #{{ job.position }} {{ job.customer.name }}
+          — {{ job.get_status_display }}
+          {% if job.status == "completed" and not job.gallons is None %}
+            · {{ job.gallons }} gal
+          {% endif %}
+          {% if job.status == "pending" %}
+            <a class="btn" href="{% url 'job_complete' job.pk %}">Complete</a>
+          {% else %}
+            <a href="{% url 'job_report' job.pk %}">PDF</a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p>No route built for today. Plan one from a customer's due date or the
+    <a href="{% url 'route_day' today|date:'Y-m-d' %}">route builder</a>.</p>
+  {% endif %}
+</div>
+
+<div class="card">
+  <h2>Wall of Love</h2>
+  <p><strong>{{ callable_count }}</strong> callable reference{{ callable_count|pluralize }} —
+  twelve named, callable customers outranks this vertical's entire third-party review base.</p>
+  {% for cs in callable_references %}
+    <p>“{{ cs.quote }}” — <strong>{{ cs.title }}</strong>{% if cs.location %}, {{ cs.location }}{% endif %}
+    {% if cs.contact_name %}· ask for {{ cs.contact_name }}{% endif %}</p>
+  {% empty %}
+    <p class="hint">None yet. After every close: capture a quote and an outcome, get permission
+    to share a phone number, then flip the callable flag in admin. Referral + comparison CAC
+    runs ~$150 vs ~$1,000 loaded founder time per cold close.</p>
+  {% endfor %}
+</div>
+
+<div class="card">
+  <h2>Board-of-Health filings</h2>
+  {% if filings_due %}
+    <ol class="route">
+      {% for f in filings_due %}
+        <li>
+          <span class="{% if f.days_left < 0 %}overdue{% endif %}"><strong>{{ f.days_left }}d</strong></span>
+          JOB-{{ f.job.pk|stringformat:"06d" }} {{ f.job.customer.name }}
+          · {{ f.rule_label }}
+          · {{ f.form_variant }}
+          · due {{ f.due|date:"Y-m-d" }}
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p>No open filing windows.</p>
+  {% endif %}
+</div>
+
+<div class="card">
+  <h2><span class="overdue">Overdue</span> ({{ overdue|length }})</h2>
+  {% include "core/customer_rows.html" with customers=overdue show_due=1 %}
+</div>
+<div class="card">
+  <h2>Due within 30 days ({{ due_30|length }})</h2>
+  {% include "core/customer_rows.html" with customers=due_30 show_due=1 %}
+</div>
+<div class="card">
+  <h2>Due in 31–90 days ({{ due_90|length }})</h2>
+  {% include "core/customer_rows.html" with customers=due_90 show_due=1 %}
+</div>
+<div class="card">
+  <h2>Bookkeeping</h2>
+  <p class="hint">One CSV per month: every invoice, ready for QuickBooks import.</p>
+  <a class="btn secondary" href="{% url 'invoice_export' today.year today.month %}">This month's invoices (CSV)</a>
+  {% if prev_month %}
+  <a class="btn secondary" href="{% url 'invoice_export' prev_year prev_month %}">{{ prev_month_name }} {{ prev_year }}</a>
+  {% endif %}
+</div>
+{% endblock %}

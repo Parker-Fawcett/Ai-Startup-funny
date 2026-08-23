@@ -1,0 +1,10 @@
+<table>
+  {% if customers %}
+    <tr><th>Customer</th><th>Address</th>{% if show_due %}<th>Due</th>{% endif %}</tr>
+    {% for c in customers %}
+      <tr><td>{{ c.name }}</td><td>{{ c.address }}</td>{% if show_due %}<td>{{ c.next_due }}</td>{% endif %}</tr>
+    {% endfor %}
+  {% else %}
+    <tr><td>Nothing here.</td></tr>
+  {% endif %}
+</table>
