@@ -1,21 +1,20 @@
 {% extends "core/base.html" %}
 {% block content %}
 <div class="card">
-  <h2>Import customers</h2>
-  <p class="hint">CSV with a header row. Required: <code>name</code>, <code>address</code>.
-  Optional: <code>city,state,zip,tank_size_gallons,pump_interval_months,last_pumped</code> (dates as YYYY-MM-DD).</p>
+  <div class="kicker">Day-one migration</div>
+  <h2>Import your customer list</h2>
   {% if errors %}
     <div class="errors">
-      <strong>Imported {{ imported_count }} row(s); rejected:</strong>
-      <ul>
-        {% for e in errors %}<li>Row {{ e.row_number }}: {{ e.reason }}</li>{% endfor %}
-      </ul>
+      <strong>{{ imported_count }} row{{ imported_count|pluralize }} imported.</strong>
+      <ul style="margin:.4rem 0 0;padding-left:1.1rem">{% for e in errors %}<li>Row {{ e.row_number }}: {{ e.reason }}</li>{% endfor %}</ul>
     </div>
   {% endif %}
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <p>{{ form.csv_file }}</p>
-    <button class="btn" type="submit">Import</button>
+    {{ form.as_p }}
+    <button class="btn big" type="submit">Import CSV</button>
   </form>
+  <p class="hint">Required columns: name, address. Optional: city, state, zip, email, phone,
+  tank_size_gallons, pump_interval_months, last_pumped (YYYY-MM-DD).</p>
 </div>
 {% endblock %}

@@ -1,0 +1,8 @@
+{% if callable_count %}
+  <p><strong>{{ callable_count }}</strong> callable reference{{ callable_count|pluralize }} on file.</p>
+  {% for cs in callable_references %}
+    <blockquote>“{{ cs.quote }}” — <strong>{{ cs.title }}</strong>{% if cs.location %}, {{ cs.location }}{% endif %}</blockquote>
+  {% endfor %}
+{% else %}
+  <p class="hint"><strong>0</strong> callable references yet — twelve named, callable customers outranks this vertical's entire third-party review base. After every close: capture a quote and an outcome, get permission to share a phone number, then flip the callable flag in admin. Referral + comparison CAC runs ~$150 vs ~$1,000 loaded founder time per cold close.</p>
+{% endif %}

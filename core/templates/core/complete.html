@@ -1,9 +1,9 @@
 {% extends "core/base.html" %}
 {% block content %}
 <div class="card">
-  <h2>Complete stop</h2>
-  <p><strong>{{ job.customer.name }}</strong><br>{{ job.customer.address }}</p>
-  {% if job.customer.tank_size_gallons %}<p>Tank: {{ job.customer.tank_size_gallons }} gallons</p>{% endif %}
+  <div class="kicker">Close out stop</div>
+  <h2>{{ job.customer.name }}</h2>
+  <p class="hint">{{ job.customer.address }}{% if job.customer.tank_size_gallons %} · {{ job.customer.tank_size_gallons }} gal tank{% endif %}</p>
   <form method="post" enctype="multipart/form-data" data-offline-queue>
     {% csrf_token %}
     <p><label>Gallons pumped<br>{{ form.gallons }}</label></p>
@@ -14,8 +14,8 @@
     <p><label>Notes<br>{{ form.notes }}</label></p>
     <p><label>Photo (proof of service)<br>{{ form.photo }}</label></p>
     {% if form.photo.errors %}<div class="errors">{{ form.photo.errors }}</div>{% endif %}
-    <button class="btn" type="submit">Mark completed</button>
-    <a class="btn secondary" href="{% url 'route_day' job.route_day|date:'Y-m-d' %}">Back</a>
+    <button class="btn big" type="submit">Mark completed &amp; invoice</button>
+    <a class="btn secondary big" href="{% url 'route_day' job.route_day|date:'Y-m-d' %}">Back</a>
   </form>
 </div>
 {% endblock %}

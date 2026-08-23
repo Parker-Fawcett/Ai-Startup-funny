@@ -1,33 +1,36 @@
 {% extends "core/base.html" %}
 {% block content %}
 <div class="card">
-  <h2>Route for {{ day }}</h2>
+  <div class="kicker">Dispatch</div>
+  <h2>Route for {{ day|date:"D, N j" }}</h2>
   {% if jobs %}
     <ol class="route">
       {% for job in jobs %}
-        <li>#{{ job.position }} {{ job.customer.name }}
-          {% if job.driver %}<span class="hint">[{{ job.driver }}]</span>{% endif %}
+        <li>
+          <span>{{ job.customer.name }}
+            {% if job.driver %}<span class="hint">[{{ job.driver }}]</span>{% endif %}
+          </span>
           {% if job.status == "pending" %}
             <a class="btn" href="{% url 'job_complete' job.pk %}">Complete</a>
           {% else %}
-            {{ job.get_status_display }}
+            <span class="pill pill-{{ job.status }}">{{ job.get_status_display }}</span>
             <a href="{% url 'job_report' job.pk %}">PDF</a>
             {% with job.invoice as inv %}
               {% if inv %}
-                · <a href="{{ inv.get_absolute_url }}">{{ inv.number }} ${{ inv.total }}</a>
+                <a href="{{ inv.get_absolute_url }}"><span class="pill pill-{{ inv.status }}">{{ inv.number }} ${{ inv.total }}</span></a>
                 {% if inv.status == "due" %}
-                  <form method="post" action="{% url 'invoice_pay' inv.pk %}" style="display:inline">
+                  <form method="post" action="{% url 'invoice_pay' inv.pk %}" style="display:flex;gap:.4rem;align-items:center">
                     {% csrf_token %}
-                    <select name="payment_method">
+                    <select name="payment_method" style="width:auto;padding:.3rem .5rem">
                       <option value="check">Check</option>
                       <option value="cash">Cash</option>
                       <option value="card_link">Card link</option>
                       <option value="ach">ACH</option>
                     </select>
-                    <button type="submit" style="background:none;border:1px solid #14663b;color:#14663b;border-radius:6px;padding:.2rem .5rem;cursor:pointer">Mark paid</button>
+                    <button class="btn secondary" type="submit">Mark paid</button>
                   </form>
                 {% else %}
-                  <span class="hint">paid {{ inv.paid_on }} via {{ inv.get_payment_method_display }}</span>
+                  <span class="hint">paid {{ inv.paid_on }} · {{ inv.get_payment_method_display }}</span>
                 {% endif %}
               {% endif %}
             {% endwith %}
@@ -35,23 +38,31 @@
         </li>
       {% endfor %}
     </ol>
-    <hr>
+  {% else %}
+    <p class="hint">Nothing routed yet — pick stops below.</p>
   {% endif %}
+</div>
+
+<div class="card">
+  <div class="kicker">Build</div>
+  <h3>Pick stops (nearest-neighbor order is computed for you)</h3>
   <form method="post">
     {% csrf_token %}
-    <h3>Pick stops (nearest-neighbor order is computed for you)</h3>
     {% for c in pickable %}
       <label class="pick">
         <input type="checkbox" name="customers" value="{{ c.pk }}">
-        {{ c.name }} — {{ c.address }}
-        {% if c.next_due %}<span class="hint">due {{ c.next_due }}</span>{% endif %}
-        {% if not c.coords %}<span class="overdue hint">no coordinates — runs last</span>{% endif %}
+        <span>{{ c.name }} <span class="hint">{{ c.address }}</span>
+        {% if c.next_due %}· due {{ c.next_due }}{% endif %}
+        {% if not c.coords %}<span class="overdue">· no coordinates, runs last</span>{% endif %}</span>
       </label>
     {% empty %}
       <p class="hint">No due customers. Import a list or adjust pump intervals.</p>
     {% endfor %}
-    <p><label>Driver(s) for this route<br><input type="text" name="driver" maxlength="80" placeholder="e.g., Ray / Jo"></label></p>
-    {% if pickable %}<button class="btn" type="submit">Build route</button>{% endif %}
+    <div class="driver-input">
+      <label for="driver">Driver(s)</label>
+      <input id="driver" type="text" name="driver" maxlength="80" placeholder="e.g., Ray / Jo">
+    </div>
+    {% if pickable %}<button class="btn big" type="submit">Build route</button>{% endif %}
   </form>
 </div>
 {% endblock %}

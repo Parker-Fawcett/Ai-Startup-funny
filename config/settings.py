@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 
 import os
 from pathlib import Path
+from urllib.parse import parse_qsl, urlsplit
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -85,15 +86,34 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/6.1/ref/settings/#databases
-
+# Database: SQLite locally; a DATABASE_URL env var (Neon/Render Postgres)
+# switches to Postgres. The pooled (-pooler) Neon endpoint means external
+# transaction pooling, so server-side cursors stay off per Django docs.
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+_database_url = os.environ.get("DATABASE_URL", "")
+if _database_url:
+    parts = urlsplit(_database_url)
+    _query = dict(parse_qsl(parts.query))
+    _query.setdefault("sslmode", "require")
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": parts.path.lstrip("/"),
+            "USER": parts.username,
+            "PASSWORD": parts.password,
+            "HOST": parts.hostname,
+            "PORT": parts.port or 5432,
+            "OPTIONS": _query,
+            "CONN_MAX_AGE": 0,
+            "DISABLE_SERVER_SIDE_CURSORS": True,
+        }
+    }
 
 
 # Password validation

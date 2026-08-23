@@ -1,16 +1,22 @@
 {% extends "core/base.html" %}
+{% block title %}Pricing — PumpRun flat-rate septic software{% endblock %}
 {% block content %}
-<div class="card">
-  <h2>Simple flat pricing</h2>
+<section class="hero">
+  <h1>One flat bill. Whole crew included.</h1>
+  <p>Per-tech pricing punishes you for hiring driver #4. We don't.</p>
   <p class="hint">{{ plans_contract }}</p>
+</section>
+<div class="pricegrid">
   {% for plan in plans %}
-  <div class="card" style="margin:.75rem 0">
-    <h3>{{ plan.name }} — {{ plan.price }}</h3>
-    <p><strong>{{ plan.trucks }}</strong></p>
-    <p class="hint">{{ plan.features }}</p>
-    <a class="btn" href="{% url 'signup' %}">Start free trial</a>
+  <div class="card pricecard {% if forloop.last %}featured{% endif %}">
+    {% if forloop.last %}<span class="tag">Best for fleets</span>{% endif %}
+    <h3>{{ plan.name }} — {{ plan.trucks }}</h3>
+    <div class="price">{{ plan.price }}</div>
+    <ul><li>{{ plan.features }}</li></ul>
+    <a class="btn{% if not forloop.first %} big{% endif %}" href="{% url 'signup' %}">Start free trial</a>
   </div>
   {% endfor %}
-  <p class="hint">Every plan includes unlimited users — add a driver without a bigger bill.</p>
 </div>
+<div class="card"><p class="hint">Every plan: unlimited users, month-to-month, cancel anytime. Annual prepay = 2 months free.</p></div>
+{% include "core/compare_links.html" %}
 {% endblock %}

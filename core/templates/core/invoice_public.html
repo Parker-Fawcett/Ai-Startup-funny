@@ -5,21 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ invoice.number }} — {{ invoice.organization.name }}</title>
   <style>
-    body { font-family: -apple-system, system-ui, sans-serif; max-width: 30rem; margin: 0 auto; padding: 1rem; background: #f5f5f0; color: #1a1a1a; line-height: 1.4; }
-    .card { background: #fff; border-radius: 8px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+    body { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; max-width: 30rem; margin: 6% auto; padding: 1rem; background: #faf9f6; color: #17211c; line-height: 1.55; }
+    .card { background: #fff; border: 1px solid #e6e3da; border-radius: 12px; padding: 1.5rem 1.4rem; box-shadow: 0 1px 2px rgba(15,40,30,.06), 0 8px 24px -12px rgba(15,40,30,.18); }
     h1 { font-size: 1.25rem; margin: 0 0 .25rem; }
-    table { width: 100%; border-collapse: collapse; margin: .75rem 0; }
-    td { padding: .45rem 0; border-bottom: 1px solid #eee; }
+    .kicker { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: #5b6a62; }
+    table { width: 100%; border-collapse: collapse; margin: .9rem 0; }
+    td { padding: .5rem 0; border-bottom: 1px solid #e6e3da; }
     td.amt { text-align: right; font-variant-numeric: tabular-nums; }
-    .total { font-size: 1.6rem; font-weight: 700; margin: .5rem 0; }
-    .badge { display: inline-block; padding: .25rem .7rem; border-radius: 999px; font-size: .9rem; }
-    .due { background: #fdecea; color: #b00020; }
-    .paid { background: #e6f4ea; color: #14663b; }
-    .hint { color: #666; font-size: .85rem; }
+    .total { font-size: 1.7rem; font-weight: 800; margin: .6rem 0; color: #0f3d2f; }
+    .badge { display: inline-block; padding: .25rem .7rem; border-radius: 999px; font-size: .85rem; font-weight: 700; }
+    .due { background: #fef3c7; color: #b45309; }
+    .paid { background: #dcfce7; color: #14663b; }
+    .hint { color: #5b6a62; font-size: .87rem; }
+    a.paybtn { display: block; text-align: center; margin: 1rem 0 .5rem; padding: .95rem; background: #14663b; color: #fff !important; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 1.05rem; }
   </style>
 </head>
 <body>
   <div class="card">
+    <div class="kicker">Invoice</div>
     <h1>{{ invoice.organization.name }}</h1>
     <p class="hint">{{ invoice.number }} · Issued {{ invoice.issued_on }}</p>
     <table>
@@ -31,11 +34,11 @@
     {% if invoice.status == "paid" %}
       <span class="badge paid">Paid {{ invoice.paid_on }} · {{ invoice.get_payment_method_display }}</span>
     {% elif invoice.status == "void" %}
-      <span class="badge hint">Void</span>
+      <span class="hint">Void</span>
     {% else %}
       <span class="badge due">Due</span>
-      {% if pay_url %}<a class="btn" style="display:block;text-align:center;margin:.75rem 0;padding:.9rem;background:#14663b;color:#fff;border-radius:6px;text-decoration:none;font-size:1.15rem" href="{{ pay_url }}">Pay ${{ invoice.total }} by card</a>{% endif %}
-      <p>To pay by card or ask a question, call <strong>{{ invoice.organization.name }}</strong>.
+      {% if pay_url %}<a class="paybtn" href="{{ pay_url }}">Pay ${{ invoice.total }} by card</a>{% endif %}
+      <p class="hint">To pay by card or ask a question, call <strong>{{ invoice.organization.name }}</strong>.
       Prefer check? Make it payable to {{ invoice.organization.name }} and note
       <strong>{{ invoice.number }}</strong> on the memo line.</p>
     {% endif %}

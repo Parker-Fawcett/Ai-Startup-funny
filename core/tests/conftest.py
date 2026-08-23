@@ -7,6 +7,14 @@ from django.test import Client
 from core.models import Organization
 
 
+@pytest.fixture(autouse=True)
+def _unhashed_static(settings):
+    """Tests must not depend on a collectstatic manifest snapshot."""
+    settings.STORAGES["staticfiles"]["BACKEND"] = (
+        "django.contrib.staticfiles.storage.StaticFilesStorage"
+    )
+
+
 @pytest.fixture
 def org() -> Organization:
     return Organization.objects.create(name="Test Septic")

@@ -1,8 +1,8 @@
 {% extends "core/base.html" %}
 {% block content %}
-<div class="card">
-  <h2>Start your free trial</h2>
-  <p class="hint">Full product, no card. Your shop's book lives here in minutes.</p>
+<div class="card" style="max-width:26rem;margin:1.5rem auto">
+  <div class="kicker">Free trial · no card</div>
+  <h2>Start your shop in minutes</h2>
   {% if form.errors %}<div class="errors">Check the highlighted fields below.</div>{% endif %}
   <form method="post">{% csrf_token %}
     <input type="hidden" name="website" value="">
@@ -11,7 +11,7 @@
     <p><label>Password<br>{{ form.password1 }}</label></p>
     <p><label>Confirm password<br>{{ form.password2 }}</label></p>
     {% for field in form %}{% if field.errors %}<div class="errors">{{ field.label_tag }} {{ field.errors }}</div>{% endif %}{% endfor %}
-    <button class="btn" type="submit">Create my shop</button>
+    <button class="btn big" type="submit">Create my shop</button>
   </form>
   <p class="hint">Already onboard? <a href="{% url 'login' %}">Log in</a>.</p>
 </div>
