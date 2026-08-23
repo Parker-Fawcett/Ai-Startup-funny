@@ -72,7 +72,7 @@ def robots_txt(request: HttpRequest) -> HttpResponse:
 def sitemap_xml(request: HttpRequest) -> HttpResponse:
     """Hand-rolled sitemap of public pages with today's lastmod — nothing auth-gated."""
     lastmod = timezone.localdate().isoformat()
-    paths = ["/"] + list(CANONICAL_PATHS)
+    paths = ["/", *CANONICAL_PATHS]
     entries = "".join(
         f"<url><loc>{request.build_absolute_uri(path)}</loc><lastmod>{lastmod}</lastmod></url>"
         for path in paths
@@ -171,7 +171,9 @@ def signup(request: HttpRequest) -> HttpResponse:
                 username=email, email=email, password=form.cleaned_data["password1"]
             )
             with transaction.atomic():
-                organization = Organization.objects.create(name=form.cleaned_data["shop_name"])
+                organization = Organization.objects.create(
+                    name=form.cleaned_data["shop_name"], owner=user
+                )
                 auth_login(request, user)
                 track("signup_created", organization=organization)
             return redirect("dashboard")
@@ -192,85 +194,11 @@ def title5_kit(request: HttpRequest) -> HttpResponse:
     return render(request, "core/title5_kit.html")
 
 
-def title5_kit_pdf(request: HttpRequest) -> HttpResponse:
-    """Generate the Title-5 kit PDF on the fly: cover + Form-4 fields + checklist."""
-    import io
+def title5_kit_pdf(request: HttpRequest) -> HttpResponse:  # noqa: ARG001 -- URL resolver passes it
+    """Serve the generated Title-5 kit PDF."""
+    from core.title5_kit import render_kit_pdf  # noqa: PLC0415 -- keeps reportlab lazy
 
-    from reportlab.lib.pagesizes import letter
-    from reportlab.lib.units import inch
-    from reportlab.pdfgen.canvas import Canvas
-
-    buffer = io.BytesIO()
-    pdf = Canvas(buffer, pagesize=letter)
-    width, height = letter
-    pdf.setTitle("PumpRun — MA Title 5 Pumping Record Kit")
-
-    pdf.setFont("Helvetica-Bold", 22)
-    pdf.drawString(inch, height - inch, "MA Title 5 Pumping Record Kit")
-    pdf.setFont("Helvetica", 11)
-    pdf.drawString(
-        inch,
-        height - inch - 0.35 * inch,
-        "What the law requires, the form your Board of Health expects, and a checklist.",
-    )
-
-    y = height - 2 * inch
-    blocks = [
-        (
-            "1. What 310 CMR 15.351 requires",
-            [
-                "Every septic tank must be pumped whenever needed - typically at least every 3 years.",
-                "The pumper must note the system's condition on a DEP-approved pumping form.",
-                "That form goes to the town's Approving Authority within 14 DAYS of the pump-out.",
-                "Towns may add rules: some require monthly no-pumping notices, licenses, or their own forms.",
-            ],
-        ),
-        (
-            "2. The System Pumping Record (Form 4) - fields you must capture",
-            [
-                "Property location and owner; date pumped; system type (septic/tight tank/cesspool).",
-                "Quantity pumped (gallons); effluent tee condition; filter present? cleaned?",
-                "Condition of system; pumper name, license, and signature.",
-            ],
-        ),
-        (
-            "3. Pre-departure checklist",
-            [
-                "[ ] Gallons measured and recorded   [ ] Filter serviced (cleaned/replaced)",
-                "[ ] Tank condition noted (baffle/tee/risers)   [ ] Photo of lid + yard taken",
-                "[ ] Form 4 filled and copied   [ ] Filed with town BOH within 14 days",
-            ],
-        ),
-        (
-            "4. How PumpRun automates this",
-            [
-                "Every completed job in PumpRun captures these exact fields and generates the",
-                "board-ready record automatically, with a per-job filing receipt log so nothing",
-                "slips past the 14-day clock. Free trial at pumprun-x4ic.onrender.com.",
-            ],
-        ),
-    ]
-    for heading, lines in blocks:
-        pdf.setFont("Helvetica-Bold", 13)
-        pdf.drawString(inch, y, heading)
-        y -= 0.28 * inch
-        pdf.setFont("Helvetica", 10.5)
-        for line in lines:
-            pdf.drawString(inch + 0.15 * inch, y, line)
-            y -= 0.24 * inch
-        y -= 0.2 * inch
-
-    pdf.setFont("Helvetica-Oblique", 8.5)
-    pdf.drawCentredString(
-        width / 2,
-        0.6 * inch,
-        "Operational reference only - not legal advice. Confirm local requirements with your board.",
-    )
-    pdf.showPage()
-    pdf.save()
-    payload = buffer.getvalue()
-
-    response = HttpResponse(payload, content_type="application/pdf")
+    response = HttpResponse(render_kit_pdf(), content_type="application/pdf")
     response["Content-Disposition"] = 'attachment; filename="pumprun-title5-kit.pdf"'
     return response
 

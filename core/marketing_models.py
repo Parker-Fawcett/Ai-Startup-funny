@@ -56,7 +56,7 @@ class CaseStudy(models.Model):
 class Lead(models.Model):
     """A not-ready-yet buyer who took the free compliance kit.
 
-    The trade researches once every 3–5 years; capturing the email of a
+    The trade researches once every 3-5 years; capturing the email of a
     future buyer today is cheaper than finding them when they're finally
     ready. Source records which magnet converted.
     """

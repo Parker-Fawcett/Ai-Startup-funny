@@ -25,6 +25,9 @@ class Organization(models.Model):
     home_lat = models.FloatField(null=True, blank=True)
     home_lng = models.FloatField(null=True, blank=True)
 
+    owner = models.ForeignKey(
+        "auth.User", on_delete=models.SET_NULL, null=True, blank=True, related_name="organizations"
+    )
     plan = models.CharField(max_length=16, blank=True)
     stripe_customer_id = models.CharField(max_length=64, blank=True)
     stripe_subscription_id = models.CharField(max_length=64, blank=True)

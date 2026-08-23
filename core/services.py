@@ -8,11 +8,22 @@ from core.routing import GeoPoint, LatLng, nearest_neighbor_order
 
 
 def get_default_organization() -> Organization:
-    """Return the bootstrap-mode organization, creating it on first touch."""
+    """Bootstrap-mode single-shop fallback; prefer ``for_user`` when authed."""
     organization = Organization.objects.first()
     if organization is None:
         organization = Organization.objects.create(name="My Septic")
     return organization
+
+
+def get_organization_for_user(user: object) -> Organization:
+    """Resolve the signed-in owner's shop; falls back to the bootstrap row."""
+    from django.contrib.auth.models import AnonymousUser  # noqa: PLC0415 -- typing aid only
+
+    if not isinstance(user, AnonymousUser) and getattr(user, "is_authenticated", False):
+        owned = user.organizations.order_by("pk").first()
+        if owned is not None:
+            return owned
+    return get_default_organization()
 
 
 def build_route(
@@ -55,12 +66,14 @@ def build_route(
         organization=organization, route_day=route_day, status=JobStatus.PENDING
     ).delete()
 
-    existing_ids = set(
-        Job.objects.filter(organization=organization, route_day=route_day).values_list(
-            "customer_id", flat=True
-        )
+    already_today = set(
+        Job.objects.filter(
+            organization=organization,
+            route_day=route_day,
+            status__in=(JobStatus.COMPLETED, JobStatus.SKIPPED),
+        ).values_list("customer_id", flat=True)
     )
-    ordered = [c for c in ordered if c.pk not in existing_ids]
+    ordered = [c for c in ordered if c.pk not in already_today]
 
     jobs = [
         Job(

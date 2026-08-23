@@ -18,7 +18,7 @@ from core.marketing_models import CaseStudy
 from core.media_models import JobAttachment
 from core.models import Customer, Invoice, Job, JobStatus, Organization, PaymentMethod
 from core.reports import render_job_report_pdf
-from core.services import build_route, get_default_organization
+from core.services import build_route, get_organization_for_user
 
 _STALE_AFTER_DAYS = 30  # filing windows blown by more than this leave the queue
 
@@ -36,7 +36,7 @@ class FilingQueueItem(TypedDict):
 @login_required
 def dashboard(request: HttpRequest) -> HttpResponse:
     """Bucket the route book by statutory urgency and show today's plan."""
-    organization = get_default_organization()
+    organization = get_organization_for_user(request.user)
     today = timezone.localdate()
     tracked = organization.customers.filter(next_due__isnull=False)
     overdue = tracked.filter(next_due__lt=today)
@@ -136,7 +136,7 @@ def import_customers(request: HttpRequest) -> HttpResponse:
         form = ImportForm(request.POST, request.FILES)
         if form.is_valid():
             result = _run_import(
-                organization=get_default_organization(),
+                organization=get_organization_for_user(request.user),
                 text=form.cleaned_data["csv_file"],
             )
             track("import_completed", rows=len(result.rows))
@@ -172,7 +172,7 @@ def route_day(request: HttpRequest, route_day: str) -> HttpResponse:
     except ValueError as error:
         raise Http404(f"bad route date {route_day!r}") from error
 
-    organization = get_default_organization()
+    organization = get_organization_for_user(request.user)
     if request.method == "POST":
         selected_ids = [int(pk) for pk in request.POST.getlist("customers")]
         build_route(organization, day, selected_ids, driver=request.POST.get("driver", "")[:80])
