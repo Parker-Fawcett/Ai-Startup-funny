@@ -15,6 +15,12 @@ urlpatterns = [
     path("i/<str:token>/", views_public.invoice_public, name="invoice_public"),
     path("i/<str:token>/pay/", views_public.invoice_pay_stripe, name="invoice_pay_stripe"),
     path(
+        "billing/<int:org_pk>/subscribe/<str:plan>/",
+        views_public.billing_subscribe,
+        name="billing_subscribe",
+    ),
+    path("billing/<int:org_pk>/done/", views_public.billing_callback, name="billing_callback"),
+    path(
         "export/route-sale/<str:route_day>/",
         views_export.route_sale_export,
         name="route_sale_export",

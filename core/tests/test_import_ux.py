@@ -57,9 +57,7 @@ class TestSuccessBanner:
         c.force_login(User.objects.create_superuser("ux", "ux@x.co", "pw12345!!"))
 
         csv_text = b"name,address\nA,1 Rd\nB,2 Rd\n"
-        response = c.post(
-            reverse("import"), {"csv_file": io.BytesIO(csv_text)}, follow=True
-        )
+        response = c.post(reverse("import"), {"csv_file": io.BytesIO(csv_text)}, follow=True)
 
         body = response.content.decode()
         assert "Imported 2 customers." in body

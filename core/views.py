@@ -50,6 +50,11 @@ def dashboard(request: HttpRequest) -> HttpResponse:
     )
     references = CaseStudy.objects.filter(published=True, is_callable=True)
     prev = (today.replace(day=1) - datetime.timedelta(days=1)).replace(day=1)
+    trial_expired = bool(
+        organization.subscription_status == "trialing"
+        and organization.trial_ends_on
+        and organization.trial_ends_on < today
+    )
     return render(
         request,
         "core/dashboard.html",
@@ -65,6 +70,7 @@ def dashboard(request: HttpRequest) -> HttpResponse:
             "prev_year": prev.year,
             "prev_month": prev.month,
             "prev_month_name": prev.strftime("%B"),
+            "trial_expired": trial_expired,
         },
     )
 

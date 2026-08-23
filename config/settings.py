@@ -190,3 +190,12 @@ STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "")
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "")
 TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN", "")
 TWILIO_FROM_NUMBER = os.environ.get("TWILIO_FROM_NUMBER", "")
+
+# One Stripe Price ID per plan (create once in the dashboard); empty means
+# that plan's subscribe button is hidden rather than erroring.
+STRIPE_PRICE_SOLO = os.environ.get("STRIPE_PRICE_SOLO", "")
+STRIPE_PRICE_SHOP = os.environ.get("STRIPE_PRICE_SHOP", "")
+STRIPE_PRICE_FLEET = os.environ.get("STRIPE_PRICE_FLEET", "")
+
+# Where trial-expiry nudges land when the customer rows carry no email.
+OWNER_FALLBACK_EMAIL = os.environ.get("OWNER_FALLBACK_EMAIL", "")

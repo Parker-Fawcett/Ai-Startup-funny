@@ -1,5 +1,11 @@
 {% extends "core/base.html" %}
 {% block content %}
+{% if trial_expired %}
+<div class="errors">
+  <strong>Your 30-day trial has ended.</strong>
+  <a href="{% url 'pricing' %}">Pick a plan</a> to keep the route book, reminders, and filing clocks running.
+</div>
+{% endif %}
 <div class="statstrip">
   <div class="stat bad"><div class="num">{{ overdue|length }}</div><div class="lbl">Overdue</div></div>
   <div class="stat warn"><div class="num">{{ due_30|length }}</div><div class="lbl">Due 30d</div></div>

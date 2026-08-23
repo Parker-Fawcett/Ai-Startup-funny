@@ -25,6 +25,12 @@ class Organization(models.Model):
     home_lat = models.FloatField(null=True, blank=True)
     home_lng = models.FloatField(null=True, blank=True)
 
+    plan = models.CharField(max_length=16, blank=True)
+    stripe_customer_id = models.CharField(max_length=64, blank=True)
+    stripe_subscription_id = models.CharField(max_length=64, blank=True)
+    subscription_status = models.CharField(max_length=16, blank=True)
+    trial_ends_on = models.DateField(null=True, blank=True)
+
     def __str__(self) -> str:
         return str(self.name)
 

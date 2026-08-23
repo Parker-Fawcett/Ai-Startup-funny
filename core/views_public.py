@@ -7,11 +7,14 @@ to own. Every competitive number comes from ``marketing_data`` so pages
 cannot drift from verified figures, and estimates stay flagged.
 """
 
+from datetime import UTC
+from datetime import datetime as utc_datetime
+
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 from django.db import transaction
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import Http404, HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -195,3 +198,59 @@ def pricing(request: HttpRequest) -> HttpResponse:
 def health(request: HttpRequest) -> HttpResponse:  # noqa: ARG001 -- probe contract takes request
     """Liveness probe for platform health checks; auth-free by design."""
     return JsonResponse({"ok": True})
+
+
+PLAN_SLUGS = ("solo", "shop", "fleet")
+
+
+def billing_subscribe(request: HttpRequest, org_pk: int, plan: str) -> HttpResponse:
+    """Send the owner to Stripe Checkout to start a 30-day trial subscription."""
+    organization = get_object_or_404(Organization, pk=org_pk)
+    if plan not in PLAN_SLUGS:
+        raise Http404("unknown plan")
+    price_id = payments.price_for_plan(plan)
+    fallback = redirect("pricing")
+    if not price_id or not payments.enabled():
+        return fallback
+    try:
+        session = payments.create_subscription_session(
+            organization_id=organization.pk,
+            plan=plan,
+            price_id=price_id,
+            customer_email=request.user.email,
+            base_url=request.build_absolute_uri("/"),
+        )
+    except payments.StripeError:
+        messages.warning(request, "Checkout is temporarily unavailable — try again shortly.")
+        return fallback
+    return redirect(session["url"])
+
+
+def billing_callback(request: HttpRequest, org_pk: int) -> HttpResponse:
+    """Verify the Checkout Session server-side, then persist subscription truth."""
+    organization = get_object_or_404(Organization, pk=org_pk)
+    session_id = request.GET.get("session_id", "")
+    plan = request.GET.get("plan", "")
+    try:
+        sub = payments.session_subscription(session_id)
+    except payments.StripeError:
+        messages.warning(request, "Could not confirm the subscription just now.")
+        return redirect("dashboard")
+
+    trial_end = sub.get("trial_end")
+    organization.plan = plan if plan in PLAN_SLUGS else organization.plan
+    organization.stripe_subscription_id = str(sub.get("id") or "")
+    organization.subscription_status = str(sub.get("status") or "")
+    organization.stripe_customer_id = str(
+        (sub.get("customer") or "") if isinstance(sub.get("customer"), str) else ""
+    )
+    if isinstance(trial_end, int):
+        organization.trial_ends_on = utc_datetime.fromtimestamp(
+            trial_end, tz=UTC
+        ).date()
+    organization.save()
+    track("subscription_started", organization=organization, plan=organization.plan)
+    messages.success(
+        request, f"Subscription active — {organization.plan} plan, 30-day trial started."
+    )
+    return redirect("dashboard")
