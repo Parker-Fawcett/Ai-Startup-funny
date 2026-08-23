@@ -110,6 +110,19 @@ def _filing_queue(
     return sorted(queue, key=lambda item: item["days_left"])
 
 
+def import_template(request: HttpRequest) -> HttpResponse:  # noqa: ARG001 -- public asset view
+    """Hand the owner a starter book so the first upload works."""
+    sample = (
+        "name,address,city,state,zip,email,phone,tank_size_gallons,"
+        "pump_interval_months,last_pumped\n"
+        "Doe Residence,12 Maple St,Springfield,MA,01101,doe@example.com,,1000,12,2023-05-01\n"
+        "Corner Diner,9 Elm St,Springfield,MA,01101,,+14135550111,1500,6,2024-11-15\n"
+    )
+    response = HttpResponse(sample, content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="pumprun-customers-template.csv"'
+    return response
+
+
 @login_required
 def import_customers(request: HttpRequest) -> HttpResponse:
     """Upload a customer-list CSV; valid rows are created, bad rows are reported."""

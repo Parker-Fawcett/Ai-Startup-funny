@@ -7,6 +7,7 @@ from core import views, views_export, views_public
 urlpatterns = [
     path("", views.dashboard, name="dashboard"),
     path("import/", views.import_customers, name="import"),
+    path("import/template.csv", views.import_template, name="import_template"),
     path("route/<str:route_day>/", views.route_day, name="route_day"),
     path("jobs/<int:pk>/complete/", views.job_complete, name="job_complete"),
     path("jobs/<int:pk>/report.pdf", views.job_report_pdf, name="job_report"),

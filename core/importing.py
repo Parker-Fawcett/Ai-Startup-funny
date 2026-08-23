@@ -10,6 +10,25 @@ from typing import Final, assert_never
 _REQUIRED_COLUMNS: Final[tuple[str, ...]] = ("name", "address")
 _DEFAULT_INTERVAL_MONTHS: Final[int] = 36
 
+# Buyers' spreadsheets rarely match our headers; these synonyms map for free.
+_HEADER_ALIASES: Final[dict[str, str]] = {
+    "customername": "name",
+    "customer": "name",
+    "account": "name",
+    "streetaddress": "address",
+    "serviceaddress": "address",
+    "addr": "address",
+    "zipcode": "zip",
+    "zip_code": "zip",
+    "postalcode": "zip",
+    "tanksizegallons": "tank_size_gallons",
+    "tanksize": "tank_size_gallons",
+    "pumpintervalmonths": "pump_interval_months",
+    "intervalmonths": "pump_interval_months",
+}
+
+_DATE_FORMATS: Final[tuple[str, ...]] = ("%Y-%m-%d", "%m/%d/%Y", "%m/%d/%y")
+
 
 @dataclass(frozen=True, slots=True)
 class CustomerRow:
@@ -43,10 +62,46 @@ class ImportResult:
     errors: tuple[RowError, ...]
 
 
+_CANONICAL_COLUMNS: Final[tuple[str, ...]] = (
+    "name",
+    "address",
+    "city",
+    "state",
+    "zip",
+    "email",
+    "phone",
+    "tank_size_gallons",
+    "pump_interval_months",
+    "last_pumped",
+)
+_SQUASH_TO_COLUMN: Final[dict[str, str]] = {
+    **{col.replace("_", ""): col for col in _CANONICAL_COLUMNS},
+    **_HEADER_ALIASES,
+}
+
+
+def _normalize_header(raw: str) -> str:
+    """Fold a spreadsheet header onto our canonical column name when known."""
+    key = raw.strip().lower().replace("_", "").replace("-", "").replace(" ", "")
+    return _SQUASH_TO_COLUMN.get(key, raw.strip())
+
+
+def _parse_date(row_number: int, column: str, raw_value: str) -> date | RowError:
+    """Accept ISO plus the US Excel formats real books actually use."""
+    for fmt in _DATE_FORMATS:
+        try:
+            return datetime.strptime(raw_value.strip(), fmt).date()
+        except ValueError:
+            continue
+    accepted = "YYYY-MM-DD or MM/DD/YYYY"
+    return RowError(row_number, f"{column}: '{raw_value}' is not a date ({accepted})")
+
+
 def parse_customers_csv(text: str) -> ImportResult:
     """Parse uploaded CSV text into validated ``CustomerRow`` records or per-row errors."""
     reader = csv.DictReader(io.StringIO(text))
-    fieldnames = reader.fieldnames or []
+    fieldnames = [_normalize_header(name) for name in (reader.fieldnames or [])]
+    reader.fieldnames = fieldnames
     missing = [column for column in _REQUIRED_COLUMNS if column not in fieldnames]
     if missing:
         reason = f"missing required column(s): {', '.join(missing)}"
@@ -130,7 +185,7 @@ def _optional_iso_date(
     raw_value = _cell(raw_row, column)
     if not raw_value:
         return None
-    try:
-        return datetime.strptime(raw_value, "%Y-%m-%d").date()
-    except ValueError:
-        return RowError(row_number, f"{column}: expected YYYY-MM-DD, got '{raw_value}'")
+    parsed = _parse_date(row_number, column, raw_value)
+    if isinstance(parsed, RowError):
+        return RowError(row_number, parsed.reason)
+    return parsed

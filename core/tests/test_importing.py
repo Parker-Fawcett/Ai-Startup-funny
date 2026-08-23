@@ -53,7 +53,7 @@ class TestParseCustomersCsv:
         assert any("tank" in error.reason.lower() for error in result.errors)
 
     def test_bad_date_reports_error_not_crash(self):
-        csv_text = "name,address,last_pumped\nX,1 St,01/15/2026\n"
+        csv_text = "name,address,last_pumped\nX,1 St,not-a-date\n"
 
         result = parse_customers_csv(csv_text)
 

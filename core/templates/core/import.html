@@ -3,6 +3,7 @@
 <div class="card">
   <div class="kicker">Day-one migration</div>
   <h2>Import your customer list</h2>
+  <p><a class="btn secondary" href="{% url 'import_template' %}">Download the CSV template</a></p>
   {% if errors %}
     <div class="errors">
       <strong>{{ imported_count }} row{{ imported_count|pluralize }} imported.</strong>
