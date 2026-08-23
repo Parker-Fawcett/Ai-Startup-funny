@@ -30,6 +30,7 @@ urlpatterns = [
     path("compare/pumpdocket/", views_public.compare_pumpdocket, name="compare_pumpdocket"),
     path("pricing/", views_public.pricing, name="pricing"),
     path("signup/", views_public.signup, name="signup"),
+    path("healthz/", views_public.health, name="health"),
     path("robots.txt", views_public.robots_txt, name="robots"),
     path("sitemap.xml", views_public.sitemap_xml, name="sitemap"),
 ]

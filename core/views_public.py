@@ -177,3 +177,11 @@ def pricing(request: HttpRequest) -> HttpResponse:
         "core/pricing.html",
         {"plans": PLANS, "plans_contract": PUMPRUN["contract"]},
     )
+
+
+from django.http import JsonResponse
+
+
+def health(request: HttpRequest) -> HttpResponse:
+    """Liveness probe for platform health checks; auth-free by design."""
+    return JsonResponse({"ok": True})
