@@ -8,6 +8,7 @@ third-party, and nothing is invented.
 
 import pytest
 from django.test import Client
+from django.urls import reverse
 
 from core.marketing_data import CANONICAL_PATHS, COMPETITORS
 from core.marketing_models import CaseStudy
@@ -109,8 +110,8 @@ class TestDiscovery:
 
 
 class TestWallOfLove:
-    def test_dashboard_counts_only_callable_references(
-        self, client: Client, org: Organization
+    def test_pricing_shows_only_callable_references(
+        self, anon_client: Client, org: Organization
     ) -> None:
         CaseStudy.objects.create(
             organization=org, title="Callable Co", quote="q", outcome="o", is_callable=True
@@ -119,11 +120,15 @@ class TestWallOfLove:
             organization=org, title="Quiet Co", quote="q", outcome="o", is_callable=False
         )
 
-        body = client.get("/").content.decode()
+        body = anon_client.get("/pricing/").content.decode()
 
         assert "Wall of Love" in body
         assert "Callable Co" in body
         assert "Quiet Co" not in body
+
+    def test_wall_of_love_absent_from_operator_dashboard(self, client: Client, org: Organization):
+        body = client.get(reverse("dashboard")).content.decode()
+        assert "Wall of Love" not in body
 
     def test_seeded_bench_is_sample_and_never_callable(self) -> None:
         assert CaseStudy.objects.count() == 3

@@ -1,8 +1,9 @@
 """Marketing asset models: verifiable customer references (Move 2).
 
 Distribution is the binding constraint, not features: twelve named, callable
-customers with published outcomes outrank the entire vertical's third-party
-review base (~520 reviews combined; Tank Track and PumpDocket have zero).
+customers outrank the vertical's entire THIRD-PARTY review base (~520 reviews
+across G2/Capterra combined; rivals' only ratings are first-party testimonials
+on their own sites).
 ``CaseStudy`` is the reference ledger — one row per logo the founder can put
 a prospect on the phone with.
 

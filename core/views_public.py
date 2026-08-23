@@ -172,10 +172,18 @@ def signup(request: HttpRequest) -> HttpResponse:
 
 def pricing(request: HttpRequest) -> HttpResponse:
     """Public plan page; numbers live in marketing_data so copy cannot drift."""
+    from core.marketing_models import CaseStudy
+
+    references = CaseStudy.objects.filter(published=True, is_callable=True)[:3]
     return render(
         request,
         "core/pricing.html",
-        {"plans": PLANS, "plans_contract": PUMPRUN["contract"]},
+        {
+            "plans": PLANS,
+            "plans_contract": PUMPRUN["contract"],
+            "callable_references": references,
+            "callable_count": CaseStudy.objects.filter(published=True, is_callable=True).count(),
+        },
     )
 
 
