@@ -17,3 +17,6 @@ media/
 .ruff_cache/
 .pytest_cache/
 .codegraph/
+
+# Build output
+staticfiles/
