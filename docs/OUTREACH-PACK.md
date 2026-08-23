@@ -45,3 +45,19 @@ After ~10 real demos: fewer than 1 close at $199 → stop spending; execute the 
 ## Objections log (append as they come)
 | Objection | Count | Answer that worked |
 |---|---|---|
+
+## Researched prospects (verified live Aug 23) — drafts in `outreach-drafts/`
+| Company | Town | Site | Draft |
+|---|---|---|---|
+| Clean Septics | Ludlow | cleanseptics.com | [draft](outreach-drafts/clean-septics-ludlow.md) |
+| Fletcher Sewer & Drain | Western MA / N. CT | fletcherseweranddrain.com | [draft](outreach-drafts/fletcher-sewer-drain.md) |
+| Complete Septic Service | Belchertown | completesepticservice.com | [draft](outreach-drafts/complete-septic-belchertown.md) |
+| Bergeron Drain Pro | South Deerfield | bergerondrainpro.com | [draft](outreach-drafts/bergeron-drain-pro.md) |
+| Karl's Excavating & Site Work | Hampshire County | karlssitework.com | [draft](outreach-drafts/karls-site-work.md) |
+| Earth Movers Excavation & Septic | Wilbraham | earthmoversexcavation.com | [draft](outreach-drafts/earth-movers-wilbraham.md) |
+| Mid State Sewerage | Millbury | midstatesewerage.com | [draft](outreach-drafts/mid-state-sewerage-millbury.md) |
+| Valley Excavating | Hadley | valleyexcavating.com | [draft](outreach-drafts/valley-excavating-hadley.md) |
+
+**Slots 9–10:** pull two more from any town BOH licensed-hauler list (Mendon/Hopkinton/Westford publish PDFs) — same draft template applies.
+
+*(Non-target: Wind River Environmental — national roll-up, not a founding-offer fit.)*
