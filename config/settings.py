@@ -48,7 +48,7 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_SSL_REDIRECT = os.environ.get('DJANGO_SECURE_SSL_REDIRECT', '1') == '1'
+    SECURE_SSL_REDIRECT = os.environ.get("DJANGO_SECURE_SSL_REDIRECT", "1") == "1"
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 PERMISSIONS_POLICY = {
     "geolocation": [],

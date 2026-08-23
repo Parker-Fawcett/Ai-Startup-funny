@@ -1,0 +1,9 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="card" style="text-align:center">
+  <h2>You're on the list.</h2>
+  <p><a class="btn big" href="{% url 'title5_kit_pdf' %}">Download the kit now (PDF)</a></p>
+  <p class="hint">While you're here: see how PumpRun files these forms automatically.</p>
+  <a class="btn secondary" href="{% url 'pricing' %}">See how it works</a>
+</div>
+{% endblock %}

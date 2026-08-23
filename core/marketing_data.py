@@ -98,3 +98,11 @@ CANONICAL_PATHS: tuple[str, ...] = (
 def competitor(slug: str) -> dict[str, str]:
     """Return one competitor's fact sheet by slug."""
     return next(entry for entry in COMPETITORS if entry["slug"] == slug)
+
+
+FOUNDING_OFFER = {
+    "headline": "Founding 10 shops: $199/mo, rate-locked forever",
+    "body": "First ten shops get every feature in Fleet at $199/mo — locked for as long as you stay. "
+    "In exchange: a candid testimonial after 60 days and permission to reference you.",
+    "remaining": 10,
+}

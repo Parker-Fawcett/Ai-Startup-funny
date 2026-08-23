@@ -51,3 +51,22 @@ class CaseStudy(models.Model):
     def __str__(self) -> str:
         flag = "callable" if self.is_callable else "reference"
         return f"{self.title} ({flag})"
+
+
+class Lead(models.Model):
+    """A not-ready-yet buyer who took the free compliance kit.
+
+    The trade researches once every 3–5 years; capturing the email of a
+    future buyer today is cheaper than finding them when they're finally
+    ready. Source records which magnet converted.
+    """
+
+    email = models.EmailField(unique=True)
+    source = models.CharField(max_length=32, default="title5_kit")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ("-created_at",)
+
+    def __str__(self) -> str:
+        return f"{self.email} ({self.source})"

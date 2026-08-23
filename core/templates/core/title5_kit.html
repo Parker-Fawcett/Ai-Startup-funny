@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+{% block title %}Free MA Title 5 Pumping Record Kit{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>The MA Title 5 Pumping Record Kit</h1>
+  <p>What 310 CMR 15.351 requires, the Form 4 fields inspectors check, and the pre-departure checklist — in one printable PDF.</p>
+</section>
+<div class="card">
+  <form method="post" action="{% url 'title5_kit' %}">{% csrf_token %}
+    <label>Your email <input type="email" name="email" required placeholder="you@yourshop.com"></label>
+    <button class="btn big" type="submit">Send me the kit</button>
+  </form>
+  <p class="hint" style="margin-top:.8rem">Prefer to skip the email? <a href="{% url 'title5_kit_pdf' %}">Download the PDF directly.</a></p>
+  <p class="hint">We'll occasionally send deadline reminders for Massachusetts haulers. No spam, unsubscribe anytime.</p>
+</div>
+{% endblock %}
