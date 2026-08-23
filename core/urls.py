@@ -5,7 +5,8 @@ from django.urls import path
 from core import views, views_export, views_public
 
 urlpatterns = [
-    path("", views.dashboard, name="dashboard"),
+    path("", views_public.home, name="home"),
+    path("dashboard/", views.dashboard, name="dashboard"),
     path("import/", views.import_customers, name="import"),
     path("import/template.csv", views.import_template, name="import_template"),
     path("route/<str:route_day>/", views.route_day, name="route_day"),

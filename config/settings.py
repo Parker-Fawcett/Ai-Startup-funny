@@ -43,6 +43,23 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
+if not DEBUG:
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_SSL_REDIRECT = os.environ.get('DJANGO_SECURE_SSL_REDIRECT', '1') == '1'
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+PERMISSIONS_POLICY = {
+    "geolocation": [],
+    "camera": [],
+    "microphone": [],
+}
+CONTENT_SECURITY_POLICY = (
+    "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
+    "script-src 'self'; frame-ancestors 'none'; base-uri 'self'"
+)
+
 
 # Application definition
 
@@ -58,6 +75,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "config.middleware.SecurityHeadersMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -163,7 +181,7 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 LOGIN_URL = "/accounts/login/"
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/dashboard/"
 LOGOUT_REDIRECT_URL = "/"
 
 

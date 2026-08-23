@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b2e24">
   <link rel="manifest" href="/static/pumprun/manifest.webmanifest">
+  <link rel="canonical" href="https://pumprun-x4ic.onrender.com{{ request.path }}">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:site_name" content="PumpRun">
+  <meta property="og:title" content="{% block og_title %}{% endblock %}">
+  <meta property="og:description" content="Route sequencing, same-day invoicing with customer pay links, due-soon email reminders, and statutory filing deadlines for 1–10-truck septic haulers.">
+  <meta property="og:url" content="https://pumprun-x4ic.onrender.com{{ request.path }}">
+  <meta property="og:image" content="https://pumprun-x4ic.onrender.com/static/pumprun/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{% block twitter_title %}{% endblock %}">
+  <meta name="twitter:description" content="Route sequencing, same-day invoicing with customer pay links, due-soon email reminders, and statutory filing deadlines for 1–10-truck septic haulers.">
+  <meta name="twitter:image" content="https://pumprun-x4ic.onrender.com/static/pumprun/og-image.png">
+  <link rel="icon" href="/static/pumprun/favicon.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/static/pumprun/apple-touch-icon.png">
   <link rel="stylesheet" href="{% static 'pumprun/app.css' %}">
   <title>{% block title %}PumpRun — septic route &amp; Board-of-Health filing software{% endblock %}</title>
   <meta name="description" content="{% block meta_description %}Route sequencing, same-day invoicing with customer pay links, due-soon email reminders, and statutory filing deadlines for 1–10-truck septic haulers.{% endblock %}">
@@ -33,6 +46,7 @@
 {% if messages %}{% for m in messages %}<div class="errors">{{ m }}</div>{% endfor %}{% endif %}
 {% block content %}{% endblock %}
 </main>
+{% block jsonld %}{% endblock %}
 <footer class="site">
   <span>PumpRun — built for septic haulers.</span>
   <span><a href="{% url 'pricing' %}">Pricing</a> · <a href="{% url 'compare_index' %}">Compare</a> · <a href="/sitemap.xml">Sitemap</a></span>

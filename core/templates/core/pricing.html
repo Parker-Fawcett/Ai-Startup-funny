@@ -1,5 +1,33 @@
 {% extends "core/base.html" %}
 {% block title %}Pricing — PumpRun flat-rate septic software{% endblock %}
+{% block jsonld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://pumprun-x4ic.onrender.com/#app",
+      "name": "PumpRun",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "offers": [
+        { "@type": "Offer", "name": "Solo", "price": "299", "priceCurrency": "USD" },
+        { "@type": "Offer", "name": "Shop", "price": "399", "priceCurrency": "USD" },
+        { "@type": "Offer", "name": "Fleet", "price": "499", "priceCurrency": "USD" }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pumprun-x4ic.onrender.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Pricing", "item": "https://pumprun-x4ic.onrender.com/pricing/" }
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}
 {% block content %}
 <section class="hero">
   <h1>One flat bill. Whole crew included.</h1>

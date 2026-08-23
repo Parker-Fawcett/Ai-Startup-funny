@@ -70,9 +70,12 @@ def robots_txt(request: HttpRequest) -> HttpResponse:
 
 
 def sitemap_xml(request: HttpRequest) -> HttpResponse:
-    """Hand-rolled sitemap of the public comparison pages — nothing auth-gated."""
+    """Hand-rolled sitemap of public pages with today's lastmod — nothing auth-gated."""
+    lastmod = timezone.localdate().isoformat()
+    paths = ["/"] + list(CANONICAL_PATHS)
     entries = "".join(
-        f"<url><loc>{request.build_absolute_uri(path)}</loc></url>" for path in CANONICAL_PATHS
+        f"<url><loc>{request.build_absolute_uri(path)}</loc><lastmod>{lastmod}</lastmod></url>"
+        for path in paths
     )
     xml = (
         '<?xml version="1.0" encoding="UTF-8"?>'
@@ -177,6 +180,11 @@ def signup(request: HttpRequest) -> HttpResponse:
     return render(request, "core/signup.html", {"form": form})
 
 
+def home(request: HttpRequest) -> HttpResponse:
+    """Public landing page: the crawlable front door."""
+    return render(request, "core/home.html")
+
+
 def pricing(request: HttpRequest) -> HttpResponse:
     """Public plan page; numbers live in marketing_data so copy cannot drift."""
     from core.marketing_models import CaseStudy  # noqa: PLC0415 -- avoids app-init cycle
@@ -245,9 +253,7 @@ def billing_callback(request: HttpRequest, org_pk: int) -> HttpResponse:
         (sub.get("customer") or "") if isinstance(sub.get("customer"), str) else ""
     )
     if isinstance(trial_end, int):
-        organization.trial_ends_on = utc_datetime.fromtimestamp(
-            trial_end, tz=UTC
-        ).date()
+        organization.trial_ends_on = utc_datetime.fromtimestamp(trial_end, tz=UTC).date()
     organization.save()
     track("subscription_started", organization=organization, plan=organization.plan)
     messages.success(

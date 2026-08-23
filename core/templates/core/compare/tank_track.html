@@ -1,6 +1,29 @@
 {% extends "core/base.html" %}
 {% block title %}Tank Track vs PumpRun: pricing, field closeout &amp; compliance compared (2026){% endblock %}
 {% block meta_description %}Tank Track costs $180/mo for the first truck plus $150 per additional truck. See the fleet-size math against PumpRun's flat $499, where each product genuinely wins, and every price's source — verified August 2026.{% endblock %}
+{% block jsonld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "{{ request.path }}",
+      "author": { "@id": "https://pumprun-x4ic.onrender.com/#organization" },
+      "publisher": { "@id": "https://pumprun-x4ic.onrender.com/#organization" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pumprun-x4ic.onrender.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Compare", "item": "https://pumprun-x4ic.onrender.com/compare/" },
+        { "@type": "ListItem", "position": 3, "name": "Tank Track vs PumpRun", "item": "https://pumprun-x4ic.onrender.com/compare/tank_track/" }
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}
 {% block content %}
 <div class="card">
   <h1>Tank Track vs PumpRun</h1>
@@ -51,6 +74,8 @@
     saves on the phone — photo included — and sends itself when bars return. Tank
     Track is browser-only with no offline story.</li>
   </ul>
+
+  <div class="card"><p><strong>Value per truck:</strong> at four trucks PumpRun's flat $499 works out to $125/truck — below Tank Track's $150/additional-truck rate. Below three trucks, Tank Track is cheaper and we say so above.</p></div>
 
   <h2>Sources</h2>
   <ul class="hint">

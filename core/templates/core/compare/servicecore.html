@@ -1,6 +1,29 @@
 {% extends "core/base.html" %}
 {% block title %}ServiceCore alternative for small septic companies: PumpRun compared (2026){% endblock %}
 {% block meta_description %}ServiceCore doesn't publish pricing, requires an annual contract, and takes 6-12 weeks to onboard. If you run 1-10 septic trucks, compare it against PumpRun's flat $499, month-to-month, live tomorrow — sources cited.{% endblock %}
+{% block jsonld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "{{ request.path }}",
+      "author": { "@id": "https://pumprun-x4ic.onrender.com/#organization" },
+      "publisher": { "@id": "https://pumprun-x4ic.onrender.com/#organization" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pumprun-x4ic.onrender.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Compare", "item": "https://pumprun-x4ic.onrender.com/compare/" },
+        { "@type": "ListItem", "position": 3, "name": "ServiceCore vs PumpRun", "item": "https://pumprun-x4ic.onrender.com/compare/servicecore/" }
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}
 {% block content %}
 <div class="card">
   <h1>{{ pumprun.name }} as a ServiceCore alternative</h1>
@@ -40,6 +63,8 @@
     <li><strong>Filing deadlines as data:</strong> town-level rules, statutory clocks, and
     board-ready PDFs — the workflow ServiceCore's own materials don't claim to cover.</li>
   </ul>
+
+  <div class="card"><p><strong>Value per truck:</strong> ServiceCore's reported per-truck pricing means a 3-truck shop pays more than PumpRun's whole flat bill — with a 6-12 week onboarding instead of same-day CSV.</p></div>
 
   <h2>Sources</h2>
   <ul class="hint">

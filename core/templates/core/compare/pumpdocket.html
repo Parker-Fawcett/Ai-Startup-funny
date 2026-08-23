@@ -1,6 +1,29 @@
 {% extends "core/base.html" %}
 {% block title %}PumpDocket vs PumpRun: $99 starter vs flat $499 — what the difference buys (2026){% endblock %}
 {% block meta_description %}PumpDocket's Starter is $99/mo intro ($139 standard) capped at 75 active customers. Compare tiers, caps, and compliance depth against PumpRun's flat $499 — with PumpDocket's own disclaimer quoted and sources cited.{% endblock %}
+{% block jsonld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "{{ request.path }}",
+      "author": { "@id": "https://pumprun-x4ic.onrender.com/#organization" },
+      "publisher": { "@id": "https://pumprun-x4ic.onrender.com/#organization" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pumprun-x4ic.onrender.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Compare", "item": "https://pumprun-x4ic.onrender.com/compare/" },
+        { "@type": "ListItem", "position": 3, "name": "PumpDocket vs PumpRun", "item": "https://pumprun-x4ic.onrender.com/compare/pumpdocket/" }
+      ]
+    }
+  ]
+}
+</script>
+{% endblock %}
 {% block content %}
 <div class="card">
   <h1>PumpDocket vs {{ pumprun.name }}</h1>
@@ -46,6 +69,8 @@
   <p>If price is your only criterion and your book fits under 75 customers, PumpDocket is a
   rational pick. If your Board-of-Health paperwork is the risk you're insuring against,
   compare how each product maintains its rules before you decide.</p>
+
+  <div class="card"><p><strong>Value per truck:</strong> PumpDocket wins the sticker price under ~5 trucks. Our case rests on what the flat bill includes: statutory filing clocks, town-correct forms, and a ledger that becomes your route-sale package.</p></div>
 
   <h2>Sources</h2>
   <ul class="hint">

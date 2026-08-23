@@ -31,10 +31,7 @@ class Command(BaseCommand):
             if not recipient:
                 continue
             day_word = "day" if days_left == 1 else "days"
-            subject = (
-                f"{organization.name}: {days_left} {day_word} "
-                "left in your PumpRun trial"
-            )
+            subject = f"{organization.name}: {days_left} {day_word} left in your PumpRun trial"
             body = (
                 f"Your PumpRun trial ends {organization.trial_ends_on.isoformat()}. "
                 f"Pick a plan at any time from the pricing page to keep routes, "

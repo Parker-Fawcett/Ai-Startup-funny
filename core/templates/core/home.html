@@ -1,0 +1,73 @@
+{% extends "core/base.html" %}
+{% block title %}PumpRun — route sheets, invoices, and Board-of-Health deadlines for septic haulers{% endblock %}
+{% block meta_description %}Built for 1–10-truck septic haulers: import your book in minutes, sequence routes, invoice from the truck, and never miss the 14-day filing clock.{% endblock %}
+{% block jsonld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://pumprun-x4ic.onrender.com/#organization",
+      "name": "PumpRun",
+      "url": "https://pumprun-x4ic.onrender.com/"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://pumprun-x4ic.onrender.com/#website",
+      "url": "https://pumprun-x4ic.onrender.com/",
+      "publisher": { "@id": "https://pumprun-x4ic.onrender.com/#organization" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://pumprun-x4ic.onrender.com/#app",
+      "name": "PumpRun",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "Route sequencing, same-day invoicing with customer pay links, due-soon email reminders, and statutory filing deadlines for septic haulers.",
+      "offers": [
+        { "@type": "Offer", "name": "Solo", "price": "299", "priceCurrency": "USD" },
+        { "@type": "Offer", "name": "Shop", "price": "399", "priceCurrency": "USD" },
+        { "@type": "Offer", "name": "Fleet", "price": "499", "priceCurrency": "USD" }
+      ],
+      "publisher": { "@id": "https://pumprun-x4ic.onrender.com/#organization" }
+    }
+  ]
+}
+</script>
+{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Your route book, your invoices, and the 14-day clock — handled.</h1>
+  <p>PumpRun turns the spreadsheet and the paper route sheet into a plan that builds itself,
+  invoices that send themselves, and Board-of-Health paperwork that's right the first time.</p>
+  <a class="btn" href="{% url 'signup' %}">Start free — no card</a>
+  <a class="btn secondary" href="{% url 'pricing' %}" style="margin-left:.5rem">See pricing</a>
+  <p class="hint">30-day trial · unlimited users · month-to-month</p>
+</section>
+
+<div class="statstrip">
+  <div class="stat bad"><div class="num">$66k</div><div class="lbl">lost yearly at 1 missed job/truck/week</div></div>
+  <div class="stat good"><div class="num">&lt;5 min</div><div class="lbl">to import your book</div></div>
+  <div class="stat"><div class="num">14 days</div><div class="lbl">MA filing clock, tracked per job</div></div>
+</div>
+
+<div class="card">
+  <div class="kicker">The loop</div>
+  <h2>One day to go live. Four steps.</h2>
+  <ol class="route">
+    <li><span><strong>Import</strong> your customer CSV (or download our template).</span></li>
+    <li><span><strong>Build</strong> tomorrow's route — nearest-neighbor order, driver assigned.</span></li>
+    <li><span><strong>Close out</strong> from the truck: gallons, photo, filter — even with no signal; it syncs later. The invoice exists before you leave the driveway.</span></li>
+    <li><span><strong>File</strong>: board-formatted PDF per stop + the 14-day clock tracked with a receipt log.</span></li>
+  </ol>
+  <a class="btn" href="{% url 'signup' %}">Start free trial</a>
+</div>
+
+<div class="card">
+  <div class="kicker">Proof</div>
+  {% include "core/wall_of_love.html" %}
+</div>
+
+{% include "core/compare_links.html" %}
+{% endblock %}

@@ -1,6 +1,20 @@
 {% extends "core/base.html" %}
 {% block title %}Septic pumping software compared: Tank Track vs ServiceCore vs PumpDocket vs PumpRun{% endblock %}
 {% block meta_description %}Honest head-to-head comparisons for septic haulers: Tank Track's per-truck pricing, ServiceCore's quote-only annual contract, and PumpDocket's $99 starter tier — verified against vendor pricing pages in August 2026.{% endblock %}
+{% block jsonld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Septic software compared honestly",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Tank Track vs PumpRun", "url": "https://pumprun-x4ic.onrender.com/compare/tank-track/" },
+    { "@type": "ListItem", "position": 2, "name": "ServiceCore vs PumpRun", "url": "https://pumprun-x4ic.onrender.com/compare/servicecore/" },
+    { "@type": "ListItem", "position": 3, "name": "PumpDocket vs PumpRun", "url": "https://pumprun-x4ic.onrender.com/compare/pumpdocket/" }
+  ]
+}
+</script>
+{% endblock %}
 {% block content %}
 <section class="hero">
   <h1>Septic software, compared honestly</h1>
