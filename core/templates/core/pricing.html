@@ -7,22 +7,30 @@
   <p class="hint">{{ plans_contract }}</p>
 </section>
 
-<div class="pricegrid">
+<div class="pricegrid" data-anchor-first="fleet">
   {% for plan in plans %}
-  <div class="card pricecard {% if forloop.last %}featured{% endif %}">
-    {% if forloop.last %}<span class="tag">Best for fleets</span>{% endif %}
+  <div class="card pricecard {% if forloop.first %}featured{% endif %}">
+    {% if forloop.first %}<span class="tag">Most popular with crews</span>{% endif %}
     <h3>{{ plan.name }} — {{ plan.trucks }}</h3>
     <div class="price">{{ plan.price }}</div>
     <ul><li>{{ plan.features }}</li></ul>
-    <a class="btn{% if not forloop.first %} big{% endif %}" href="{% url 'signup' %}">Start free trial</a>
+    <a class="btn big" href="{% url 'signup' %}">Start free trial</a>
   </div>
   {% endfor %}
 </div>
 
 <div class="card">
-  <p><strong>Risk reversed:</strong> 30-day free trial, no card. After that it's month-to-month —
-  and your first paid month is refunded if PumpRun doesn't save you a Saturday.
-  Annual prepay = 2 months free.</p>
+  <p><strong>Risk reversed:</strong> 30-day free trial, no card required. After that it's
+  month-to-month — and your first paid month is refunded if PumpRun doesn't save you a
+  Saturday within 60 days. Annual prepay = 2 months free.</p>
+
+<div class="card">
+  <div class="kicker">The math, in dollars</div>
+  <h3>What does missing work actually cost you?</h3>
+  <p>A 3-truck operation that misses one job per truck per week at a $425 average ticket
+  loses roughly <strong>$66,000 a year</strong>. PumpRun exists so the due list, the route,
+  the invoice, and the reminder all happen without anyone remembering.</p>
+</div>
 </div>
 
 {% include "core/wall_of_love.html" %}

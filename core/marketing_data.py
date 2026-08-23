@@ -24,20 +24,26 @@ PUMPRUN = {
 
 PLANS: tuple[dict[str, str], ...] = (
     {
+        "name": "Fleet",
+        "price": "$499/mo",
+        "trucks": "4-10 trucks",
+        "features": "Everything in Shop plus driver assignment per route day and bulk "
+        "compliance exports across the whole book.",
+    },
+    {
+        "name": "Shop",
+        "price": "$399/mo",
+        "trucks": "2-5 trucks",
+        "features": "Everything in Solo plus recurring SMS reminders, QuickBooks-ready "
+        "bookkeeper CSV, and the tank-ledger route-sale package.",
+    },
+    {
         "name": "Solo",
         "price": "$299/mo",
         "trucks": "1-3 trucks",
         "features": "CSV import, nearest-neighbor routes, tap-complete with photos, "
-        "auto-invoices + customer pay links, due-soon email reminders, monthly "
-        "bookkeeper CSV (QuickBooks import), MA 14-day filing clock + board PDFs, "
-        "tank ledger with route-sale export.",
-    },
-    {
-        "name": "Fleet",
-        "price": "$499/mo",
-        "trucks": "4-10 trucks",
-        "features": "Everything in Solo plus driver assignment per route day and bulk "
-        "compliance exports across the whole book.",
+        "auto-invoices with customer pay links, due-soon email reminders, "
+        "MA 14-day filing clock and board PDFs.",
     },
 )
 
