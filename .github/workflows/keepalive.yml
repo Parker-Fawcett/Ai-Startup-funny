@@ -1,7 +1,11 @@
 name: Keep Render warm
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    # GitHub delays scheduled runs on free tier; staggered crons keep the
+    # effective gap under Render's 15-minute idle timeout.
+    - cron: "2,12,22,32,42,52 * * * *"
+    - cron: "7,17,27,37,47,57 * * * *"
+    - cron: "0,5,10,15,20,25,30,35,40,45,50,55 * * * *"
   workflow_dispatch:
 
 permissions:
