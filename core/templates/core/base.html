@@ -24,6 +24,7 @@
 </head>
 <body>
 <header class="topbar">
+  <div class="nav-inner">
   <a class="brand" href="/">Pump<span>Run</span></a>
   <nav>
     {% if user.is_authenticated %}
@@ -41,10 +42,13 @@
   {% else %}
     <a class="cta" href="{% url 'signup' %}">Start free trial</a>
   {% endif %}
+  </div>
 </header>
-<main>
+<main class="page">
+  <div class="container">
 {% if messages %}{% for m in messages %}<div class="errors">{{ m }}</div>{% endfor %}{% endif %}
 {% block content %}{% endblock %}
+  </div>
 </main>
 {% block jsonld %}{% endblock %}
 <footer class="site">
