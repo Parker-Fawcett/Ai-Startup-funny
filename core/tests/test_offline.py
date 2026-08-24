@@ -109,3 +109,15 @@ class TestOfflineAssets:
         body = client.get(reverse("job_complete", args=[job.pk])).content
 
         assert b"data-offline-queue" in body
+
+
+class TestBranded404:
+    def test_404_renders_branded_page(self, settings):
+        from django.test import Client
+
+        settings.DEBUG = False
+        response = Client().get("/this-page-does-not-exist/")
+        assert response.status_code == 404
+        body = response.content.decode()
+        assert "isn&#x27;t on the route" in body or "isn't on the route" in body
+        assert "PumpRun" in body

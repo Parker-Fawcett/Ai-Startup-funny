@@ -1,0 +1,13 @@
+{% extends "core/base.html" %}
+{% block title %}Page not found — PumpRun{% endblock %}
+{% block content %}
+<div class="card card-centered" style="text-align:center">
+  <div class="kicker">404</div>
+  <h2>That page isn't on the route.</h2>
+  <p class="hint">The link may be old, or the address may be mistyped.</p>
+  <p>
+    <a class="btn" href="/">Go to the homepage</a>
+    <a class="btn secondary" href="{% url 'pricing' %}">See pricing</a>
+  </p>
+</div>
+{% endblock %}

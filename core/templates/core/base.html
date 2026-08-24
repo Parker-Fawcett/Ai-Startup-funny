@@ -23,6 +23,7 @@
   <meta name="description" content="{% block meta_description %}Route sequencing, same-day invoicing with customer pay links, due-soon email reminders, and statutory filing deadlines for 1–10-truck septic haulers.{% endblock %}">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="topbar">
   <div class="nav-inner">
   <a class="brand" href="/">Pump<span>Run</span></a>
@@ -44,7 +45,7 @@
   {% endif %}
   </div>
 </header>
-<main class="page">
+<main class="page" id="main-content">
   <div class="container">
 {% if messages %}{% for m in messages %}<div class="errors">{{ m }}</div>{% endfor %}{% endif %}
 {% block content %}{% endblock %}

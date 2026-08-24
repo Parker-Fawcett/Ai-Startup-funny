@@ -30,10 +30,10 @@
 {% endblock %}
 {% block content %}
 {% if founding %}
-<div class="card" style="border-color:#b45309;background:#fffbeb">
-  <div class="kicker" style="color:#b45309">Founding customer offer</div>
-  <h3 style="margin-bottom:.3rem">{{ founding.headline }}</h3>
-  <p style="margin:.2rem 0">{{ founding.body }} <strong>{{ founding.remaining }} spots left.</strong></p>
+<div class="card card-founding">
+  <div class="kicker kicker-amber">Founding customer offer</div>
+  <h3 class="tight">{{ founding.headline }}</h3>
+  <p class="tight">{{ founding.body }} <strong>{{ founding.remaining }} spots left.</strong></p>
 </div>
 {% endif %}
 <section class="hero">
