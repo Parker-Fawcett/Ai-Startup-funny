@@ -1,5 +1,5 @@
 {% extends "core/base.html" %}
-{% block title %}Pricing — PumpRun flat-rate septic software{% endblock %}
+{% block title %}Pricing: PumpRun flat-rate septic software{% endblock %}
 {% block jsonld %}
 <script type="application/ld+json">
 {
@@ -46,7 +46,7 @@
   {% for plan in plans %}
   <div class="card pricecard {% if forloop.first %}featured{% endif %}">
     {% if forloop.first %}<span class="tag">Most popular with crews</span>{% endif %}
-    <h2 class="plan-name">{{ plan.name }} — {{ plan.trucks }}</h2>
+    <h2 class="plan-name">{{ plan.name }}: {{ plan.trucks }}</h2>
     <div class="price">{{ plan.price }}</div>
     <ul><li>{{ plan.features }}</li></ul>
     <a class="btn big" href="{% url 'signup' %}">Start free trial</a>
@@ -56,7 +56,7 @@
 
 <div class="card">
   <p><strong>Risk reversed:</strong> 30-day free trial, no card required. After that it's
-  month-to-month — and your first paid month is refunded if PumpRun doesn't save you a
+  month-to-month, and your first paid month is refunded if PumpRun doesn't save you a
   Saturday within 60 days. Annual prepay = 2 months free.</p>
 
 <div class="card">
@@ -71,13 +71,12 @@
 {% include "core/wall_of_love.html" %}
 
 <div class="card">
-  <div class="kicker">FAQ</div>
   <h3>Will it work with my spreadsheet?</h3>
-  <p>Yes — upload it as CSV and we map the columns for you. Most books import in under five minutes.</p>
+  <p>Yes. Upload it as CSV and we map the columns for you. Most books import in under five minutes.</p>
   <h3>What happens when I'm out of signal?</h3>
-  <p>Completed stops save on the driver's phone — photo included — and send themselves when bars return.</p>
+  <p>Completed stops save on the driver's phone (photo included) and send themselves when bars return.</p>
   <h3>How does the Board of Health form get filed?</h3>
-  <p>PumpRun fills the correct form for each job's town and tracks the statutory clock. You send it the way your board accepts (paper or email) — we make sure it's right and on time, with a receipt log per job.</p>
+  <p>PumpRun fills the correct form for each job's town and tracks the statutory clock. You send it the way your board accepts (paper or email). We make sure it's right and on time, with a receipt log per job.</p>
 </div>
 
 {% include "core/compare_links.html" %}

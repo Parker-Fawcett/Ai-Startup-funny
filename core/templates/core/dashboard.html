@@ -15,7 +15,7 @@
 
 <div class="card">
   <div class="kicker">Dispatch board</div>
-  <h2>Today — {{ today|date:"D, N j" }}</h2>
+  <h2>Today: {{ today|date:"D, N j" }}</h2>
   {% if todays_jobs %}
     <ol class="route">
       {% for job in todays_jobs %}
@@ -31,18 +31,16 @@
       {% endfor %}
     </ol>
   {% else %}
-    <p class="hint">No stops yet — build one from the Route tab.</p>
+    <p class="hint">No stops yet. Build one from the Route tab.</p>
   {% endif %}
 </div>
 
 <div class="card">
-  <div class="kicker">Compliance</div>
   <h2>Board-of-Health filings</h2>
   {% include "core/filings_list.html" %}
 </div>
 
 <div class="card">
-  <div class="kicker">Recurring work</div>
   <h2>Overdue ({{ overdue|length }})</h2>
   {% include "core/customer_rows.html" with customers=overdue show_due=1 %}
 </div>
@@ -51,12 +49,11 @@
   {% include "core/customer_rows.html" with customers=due_30 show_due=1 %}
 </div>
 <div class="card">
-  <h2>Due in 31–90 days ({{ due_90|length }})</h2>
+  <h2>Due in 31-90 days ({{ due_90|length }})</h2>
   {% include "core/customer_rows.html" with customers=due_90 show_due=1 %}
 </div>
 
 <div class="card">
-  <div class="kicker">Money out the door</div>
   <h2>Bookkeeping</h2>
   <p class="hint">One CSV per month: every invoice, ready for QuickBooks import.</p>
   <a class="btn secondary" href="{% url 'invoice_export' today.year today.month %}">This month's invoices (CSV)</a>

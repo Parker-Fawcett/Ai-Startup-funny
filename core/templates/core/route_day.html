@@ -1,7 +1,6 @@
 {% extends "core/base.html" %}
 {% block content %}
 <div class="card">
-  <div class="kicker">Dispatch</div>
   <h2>Route for {{ day|date:"D, N j" }}</h2>
   {% if jobs %}
     <ol class="route">
@@ -39,12 +38,11 @@
       {% endfor %}
     </ol>
   {% else %}
-    <p class="hint">Nothing routed yet — pick stops below.</p>
+    <p class="hint">Nothing routed yet. Pick stops below.</p>
   {% endif %}
 </div>
 
 <div class="card">
-  <div class="kicker">Build</div>
   <h3>Pick stops (nearest-neighbor order is computed for you)</h3>
   <form method="post">
     {% csrf_token %}

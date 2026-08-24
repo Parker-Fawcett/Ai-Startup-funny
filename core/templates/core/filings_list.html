@@ -3,8 +3,7 @@
     {% for f in filings_due %}
       <li>
         <span class="{% if f.days_left < 0 %}overdue{% endif %}"><strong>{{ f.days_left }}d</strong></span>
-        <span>JOB-{{ f.job.pk|stringformat:"06d" }} {{ f.job.customer.name }}
-        · {{ f.rule_label }} · {{ f.form_variant }} · due {{ f.due|date:"Y-m-d" }}</span>
+        <span>{{ f.job.customer.name }}: {{ f.rule_label }}, {{ f.form_variant }}, due {{ f.due|date:"Y-m-d" }} (JOB-{{ f.job.pk|stringformat:"06d" }})</span>
       </li>
     {% endfor %}
   </ol>

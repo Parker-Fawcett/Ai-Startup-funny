@@ -33,6 +33,9 @@ truck cab and on a health-board desk alike.
 
 ### Rules
 - Amber is money/urgency only. Never decorative.
+- Landing pages carry **real product screenshots** (taste skill 4.8): capture the
+  live app, store under `static/pumprun/shots/`, always with width/height + alt.
+  Div-mockups and placeholder photography are banned.
 - Spruce green is interactive elements + brand chrome only.
 - Status colors (red/green) appear only as text+background pairs from this table.
 - No color outside this table. Extend the table first.
@@ -63,6 +66,12 @@ truck cab and on a health-board desk alike.
 ### Rules
 - Sentence case everywhere; kickers are the only uppercase.
 - Headings wrap rarely; apply `text-wrap: balance` to h1/h2.
+- **Em/en-dash ban (taste skill 9.G):** zero `—`/`–` in any user-visible string.
+  Ranges and separators use a hyphen; attribution uses a line break + cite.
+- **Kicker restraint (taste skill 4.7):** max 1 kicker per 3 sections. A heading
+  with a kicker is a section; a card with just a title needs no kicker.
+- **Middle-dot ration (taste skill 9.F):** max 1 `·` per visible line. Footer
+  link groups use spacing, not dots.
 
 ## 4. Spacing & Layout
 

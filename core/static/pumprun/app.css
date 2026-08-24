@@ -300,6 +300,8 @@ label.pick input[type=checkbox] { width: 1.3rem; height: 1.3rem; accent-color: v
 .card-centered { margin-left: auto; margin-right: auto; }
 .mt-2 { margin-top: 1.5rem; }
 
+img { max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); }
+
 /* ---------- hero (public pages) ---------- */
 .hero {
   background: linear-gradient(140deg, var(--spruce-900), var(--spruce-700));
@@ -351,6 +353,7 @@ footer.site {
   justify-content: space-between;
 }
 footer.site a { color: var(--ink-soft); }
+.footer-links { display: inline-flex; gap: 1.25rem; }
 a { text-underline-offset: 2px; }
 
 @media (max-width: 480px) {

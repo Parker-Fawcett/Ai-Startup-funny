@@ -1,6 +1,6 @@
 {% extends "core/base.html" %}
-{% block title %}PumpRun — route sheets, invoices, and Board-of-Health deadlines for septic haulers{% endblock %}
-{% block meta_description %}Built for 1–10-truck septic haulers: import your book in minutes, sequence routes, invoice from the truck, and never miss the 14-day filing clock.{% endblock %}
+{% block title %}PumpRun: route sheets, invoices, and Board-of-Health deadlines for septic haulers{% endblock %}
+{% block meta_description %}Built for 1-10-truck septic haulers: import your book in minutes, sequence routes, invoice from the truck, and never miss the 14-day filing clock.{% endblock %}
 {% block jsonld %}
 <script type="application/ld+json">
 {
@@ -38,12 +38,11 @@
 {% endblock %}
 {% block content %}
 <section class="hero">
-  <h1>Your route book, your invoices, and the 14-day clock — handled.</h1>
+  <h1>Your route book, your invoices, and the 14-day clock. Handled.</h1>
   <p>PumpRun turns the spreadsheet and the paper route sheet into a plan that builds itself,
   invoices that send themselves, and Board-of-Health paperwork that's right the first time.</p>
-  <a class="btn" href="{% url 'signup' %}">Start free — no card</a>
+  <a class="btn" href="{% url 'signup' %}">Start free trial</a>
   <a class="btn secondary" href="{% url 'pricing' %}" style="margin-left:.5rem">See pricing</a>
-  <p class="hint">30-day trial · unlimited users · month-to-month</p>
 </section>
 
 <div class="statstrip">
@@ -57,15 +56,14 @@
   <h2>One day to go live. Four steps.</h2>
   <ol class="route">
     <li><span><strong>Import</strong> your customer CSV (or download our template).</span></li>
-    <li><span><strong>Build</strong> tomorrow's route — nearest-neighbor order, driver assigned.</span></li>
-    <li><span><strong>Close out</strong> from the truck: gallons, photo, filter — even with no signal; it syncs later. The invoice exists before you leave the driveway.</span></li>
+    <li><span><strong>Build</strong> tomorrow's route: nearest-neighbor order, driver assigned.</span></li>
+    <li><span><strong>Close out</strong> from the truck: gallons, photo, filter, even with no signal (it syncs later). The invoice exists before you leave the driveway.</span></li>
     <li><span><strong>File</strong>: board-formatted PDF per stop + the 14-day clock tracked with a receipt log.</span></li>
   </ol>
   <a class="btn" href="{% url 'signup' %}">Start free trial</a>
 </div>
 
 <div class="card">
-  <div class="kicker">Proof</div>
   {% include "core/wall_of_love.html" %}
 </div>
 
