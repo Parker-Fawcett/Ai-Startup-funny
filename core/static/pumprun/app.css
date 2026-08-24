@@ -292,6 +292,8 @@ label.pick input[type=checkbox] { width: 1.3rem; height: 1.3rem; accent-color: v
 .driver-input input { max-width: 16rem; }
 
 .card-founding { border-color: var(--amber); background: #fffbeb; }
+.founding-title { font-weight: 700; font-size: 1.05rem; color: var(--ink); }
+.plan-name { font-size: 1.05rem; }
 .kicker-amber { color: var(--amber); }
 .tight { margin: 0.2rem 0; }
 .card-narrow { max-width: 26rem; }
