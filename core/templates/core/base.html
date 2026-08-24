@@ -1,4 +1,4 @@
-{% load static %}<!doctype html>
+{% load static %}{% load pumprun_tags %}<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -18,7 +18,7 @@
   <meta name="twitter:image" content="https://pumprun-x4ic.onrender.com/static/pumprun/og-image.png">
   <link rel="icon" href="/static/pumprun/favicon.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/static/pumprun/apple-touch-icon.png">
-  <link rel="stylesheet" href="{% static 'pumprun/app.css' %}">
+  <style>{% inline_static 'pumprun/app.css' %}</style>
   <title>{% block title %}PumpRun — septic route &amp; Board-of-Health filing software{% endblock %}</title>
   <meta name="description" content="{% block meta_description %}Route sequencing, same-day invoicing with customer pay links, due-soon email reminders, and statutory filing deadlines for 1–10-truck septic haulers.{% endblock %}">
 </head>
@@ -56,6 +56,6 @@
   <span>PumpRun — built for septic haulers.</span>
   <span><a href="{% url 'title5_kit' %}">Free Title 5 Kit</a> · <a href="{% url 'pricing' %}">Pricing</a> · <a href="{% url 'compare_index' %}">Compare</a> · <a href="/sitemap.xml">Sitemap</a></span>
 </footer>
-<script src="/static/pumprun/offline.js" defer></script>
+<script src="{% static 'pumprun/offline.js' %}" defer></script>
 </body>
 </html>

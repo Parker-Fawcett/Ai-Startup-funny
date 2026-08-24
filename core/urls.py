@@ -42,6 +42,7 @@ urlpatterns = [
     path("title5-kit/done/", views_public.title5_kit_done, name="title5_kit_done"),
     path("signup/", views_public.signup, name="signup"),
     path("healthz/", views_public.health, name="health"),
+    path("sw.js", views_public.service_worker, name="sw"),
     path("robots.txt", views_public.robots_txt, name="robots"),
     path("sitemap.xml", views_public.sitemap_xml, name="sitemap"),
 ]

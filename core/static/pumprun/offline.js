@@ -58,7 +58,7 @@
   }
 
   navigator.serviceWorker
-    .register('/static/pumprun/sw.js')
+    .register('/sw.js')
     .then((registration) => {
       if ('sync' in registration) {
         // Fire-and-forget: browsers without Background Sync simply skip this.

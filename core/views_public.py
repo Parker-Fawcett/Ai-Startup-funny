@@ -290,3 +290,16 @@ def billing_callback(request: HttpRequest, org_pk: int) -> HttpResponse:
         request, f"Subscription active — {organization.plan} plan, 30-day trial started."
     )
     return redirect("dashboard")
+
+
+def service_worker(request: HttpRequest) -> HttpResponse:  # noqa: ARG001 -- URL contract passes it
+    """Serve the service worker at root scope so it controls every page."""
+    from pathlib import Path  # noqa: PLC0415 -- keeps staticfiles import lazy
+
+    from django.contrib.staticfiles import finders  # noqa: PLC0415 -- avoids app-init cycle
+
+    found = finders.find("pumprun/sw.js")
+    body = Path(str(found)).read_bytes() if found else b""
+    response = HttpResponse(body, content_type="text/javascript")
+    response.headers["Service-Worker-Allowed"] = "/"
+    return response

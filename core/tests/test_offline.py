@@ -119,3 +119,12 @@ class TestBranded404:
         body = response.content.decode()
         assert "isn&#x27;t on the route" in body or "isn't on the route" in body
         assert "PumpRun" in body
+
+
+class TestRootScopeServiceWorker:
+    def test_sw_served_at_root_with_scope_header(self):
+        response = Client().get("/sw.js")
+        assert response.status_code == 200
+        assert response["Content-Type"] == "text/javascript"
+        assert response["Service-Worker-Allowed"] == "/"
+        assert b"pumprun-replay" in response.content
