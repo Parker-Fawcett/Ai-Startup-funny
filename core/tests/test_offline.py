@@ -113,8 +113,6 @@ class TestOfflineAssets:
 
 class TestBranded404:
     def test_404_renders_branded_page(self, settings):
-        from django.test import Client
-
         settings.DEBUG = False
         response = Client().get("/this-page-does-not-exist/")
         assert response.status_code == 404
