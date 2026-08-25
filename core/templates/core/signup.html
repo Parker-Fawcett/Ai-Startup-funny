@@ -13,6 +13,6 @@
     {% for field in form %}{% if field.errors %}<div class="errors">{{ field.label_tag }} {{ field.errors }}</div>{% endif %}{% endfor %}
     <button class="btn big" type="submit">Create my shop</button>
   </form>
-  <p class="hint">Already onboard? <a href="{% url 'login' %}">Log in</a>.</p>
+  <p class="hint" style="padding:0.75rem 0">Already onboard? <a href="{% url 'login' %}" style="padding:0.5rem;display:inline-block">Log in</a>.</p>
 </div>
 {% endblock %}
